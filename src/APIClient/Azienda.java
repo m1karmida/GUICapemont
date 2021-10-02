@@ -14,6 +14,9 @@ public class Azienda extends Utente implements Serializable {
 		this.prodotti_propri = new ArrayList<Prodotto>() ;
 
 	}
+	public Azienda(String email, String password) {
+		
+	}
 	public Azienda(String indirizzo, String email, String password, String nome, String P_IVA) {
 		super(indirizzo, password, email, nome);
 		this.P_IVA = P_IVA;

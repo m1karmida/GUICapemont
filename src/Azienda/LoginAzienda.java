@@ -5,14 +5,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import APIClient.Azienda;
+import APIClient.Client;
+import APIClient.Persona;
+import APIClient.Utente;
+
 import javax.swing.JPasswordField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
 public class LoginAzienda extends JFrame {
@@ -20,7 +29,10 @@ public class LoginAzienda extends JFrame {
 	private JPanel contentPane;
 	private JPasswordField txtPwd;
 	private JTextField txtUser;
-
+	private JButton btnLogin;
+	private JLabel lblPassword;
+	private JLabel lblUser;
+	
 
 	public LoginAzienda() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -35,19 +47,13 @@ public class LoginAzienda extends JFrame {
 		txtUser = new JTextField();
 		txtUser.setColumns(20);
 		
-		JLabel lblUser = new JLabel("user");
+		lblUser = new JLabel("user");
 		
-		JLabel lblPassword = new JLabel("password");
+		lblPassword = new JLabel("password");
 		
-		JButton btnLogin = new JButton("Login");
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				GUIAzienda azienda = new GUIAzienda();
-				azienda.setVisible(true);
-				azienda.setDefaultCloseOperation(HIDE_ON_CLOSE);
-				setVisible(false);
-			}
-		});
+		btnLogin = new JButton("Login");
+		clickLogin();
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -84,5 +90,28 @@ public class LoginAzienda extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
-	
+	private void clickLogin() {
+
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Azienda az = (Azienda) new Utente(txtUser.getText(),txtPwd.getPassword().toString());
+				try {
+					Client c = new Client("93.88.110.173", 5000);
+					if (c.makeLoginAzienda(az)) {
+						GUIAzienda azienda = new GUIAzienda();
+						azienda.setVisible(true);
+						azienda.setDefaultCloseOperation(HIDE_ON_CLOSE);
+						setVisible(false);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "credenziali errate");
+					}
+					c.closeConnection();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 }

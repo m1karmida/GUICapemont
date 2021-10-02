@@ -22,6 +22,10 @@ public class Persona extends Utente implements Serializable {
 		this.ordini_effettuati = ordini_effettuati;
 	}
 
+	public Persona(String email, String password) {
+		super(email,password);
+	}
+	
 	public ArrayList getOrdini_effettuati() {
 		return ordini_effettuati;
 	}

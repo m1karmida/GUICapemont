@@ -104,7 +104,7 @@ public class Client {
 
     }
 
-    public void makeLoginAzienda( Azienda a ) {
+    public boolean makeLoginAzienda( Azienda a ) {
 
         Messaggio m = new Messaggio("LOGINAZIENDA",a) ;
         System.out.println("LOGINAZIENDA "+a.getEmail()+" "+a.getPassword()) ;
@@ -112,10 +112,12 @@ public class Client {
         try {
             obj_out.writeObject(m);
             String ret = in.readLine();
-            System.out.println(ret) ;
+            if (ret.equals("OK"))
+            		return true;
         } catch ( Exception e ) {
             e.printStackTrace();
         }
+		return false;
 
     }
 
