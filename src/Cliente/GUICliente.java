@@ -6,12 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Cliente extends JFrame {
+public class GUICliente extends JFrame {
 
 	private JPanel contentPane;
 
 
-	public Cliente() {
+	public GUICliente() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

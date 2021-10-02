@@ -42,7 +42,7 @@ public class LoginCliente extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Cliente cliente = new Cliente();
+				GUICliente cliente = new GUICliente();
 				cliente.setVisible(true);
 				cliente.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				setVisible(false);

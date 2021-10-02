@@ -42,7 +42,7 @@ public class LoginAzienda extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Azienda azienda = new Azienda();
+				GUIAzienda azienda = new GUIAzienda();
 				azienda.setVisible(true);
 				azienda.setDefaultCloseOperation(HIDE_ON_CLOSE);
 				setVisible(false);
