@@ -94,8 +94,12 @@ public class LoginAzienda extends JFrame {
 
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-			Azienda az = new Azienda(txtUser.getText(),new String(txtPwd.getPassword()));
+
+				System.out.println(txtUser.getText()) ;
+				//System.out.println(txtPwd.getPassword().toString()) ;
+				String s = new String(txtPwd.getPassword()) ;
+				System.out.println(s) ;
+				Azienda az = new Azienda(txtUser.getText(),new String(txtPwd.getPassword()));
 				
 				txtUser.setText("");
 				txtPwd.setText("");

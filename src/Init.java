@@ -2,8 +2,6 @@ import java.awt.EventQueue;
 
 import javax.swing.border.EmptyBorder;
 
-import org.eclipse.swt.browser.VisibilityWindowAdapter;
-
 import APIClient.Client;
 import Azienda.LoginAzienda;
 import Cliente.GUICliente;
@@ -63,15 +61,7 @@ public class Init extends JFrame {
 	 */
 	public Init() {
 		setBackground(Color.GRAY);
-		
-/********** apertura connessione ****************/
-		try {
-			client = new Client("93.88.110.173",5000);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} ;
-		
+
 		
 	
 /*********** codice generato per la costruzione del form *************/		
@@ -159,7 +149,7 @@ public class Init extends JFrame {
 			             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
 			             JOptionPane.QUESTION_MESSAGE, null, null, null);
 			        if (confirm == 0) {
-				       client.closeConnection();
+				       //client.closeConnection();
 			           System.exit(0);
 			        }
 				

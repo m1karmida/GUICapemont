@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public class Prodotto implements Serializable {
 
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String nome;
 	private String categoria;
 	private float prezzo;

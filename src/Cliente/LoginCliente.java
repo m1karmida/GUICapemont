@@ -93,7 +93,7 @@ public class LoginCliente extends JFrame {
 	private void clickLogin() {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Utente u = new Utente(txtUser.getText(),txtPwd.getPassword().toString());
+				Utente u = new Utente(txtUser.getText(),new String(txtPwd.getPassword()));
 				try {
 					Client c = new Client("93.88.110.173", 5000);
 					if (c.makeLoginUtente(u)) {

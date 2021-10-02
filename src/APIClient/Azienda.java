@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Azienda extends Utente implements Serializable {
 
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String P_IVA;
 	private ArrayList<Prodotto> prodotti_propri;
 
@@ -15,7 +16,7 @@ public class Azienda extends Utente implements Serializable {
 
 	}
 	public Azienda(String email, String password) {
-		
+		super("",password,email,"") ;
 	}
 	public Azienda(String indirizzo, String email, String password, String nome, String P_IVA) {
 		super(indirizzo, password, email, nome);

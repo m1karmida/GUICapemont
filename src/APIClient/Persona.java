@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Persona extends Utente implements Serializable {
 
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String cognome;
 	private ArrayList<Ordine> ordini_effettuati;
 
