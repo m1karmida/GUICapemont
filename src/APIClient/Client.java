@@ -89,7 +89,7 @@ public class Client {
 
     }
 
-    public void makeLoginUtente( Utente u ) {
+    public boolean makeLoginUtente( Utente u ) {
 
         Messaggio m = new Messaggio("LOGINUTENTE",u) ;
         System.out.println("LOGINUTENTE "+u.getEmail()+" "+u.getPassword()) ;
@@ -97,11 +97,12 @@ public class Client {
         try {
             obj_out.writeObject(m) ;
             String ret = in.readLine();
-            System.out.println(ret) ;
+            if (ret.equals("OK"))
+        		return true;
         } catch ( Exception e ) {
             e.printStackTrace();
         }
-
+        return false;
     }
 
     public boolean makeLoginAzienda( Azienda a ) {
@@ -122,17 +123,19 @@ public class Client {
     }
 
 
-    public void makeRegisterUtente( Persona p) {
+    public boolean makeRegisterUtente( Persona p) {
         System.out.println("REGISTERUTENTE "+p.getEmail()+" "+p.getPassword()) ;
         Messaggio m = new Messaggio("REGISTERUTENTE",p) ;
 
         try {
             obj_out.writeObject(m);
             String ret = in.readLine() ;
-            System.out.println(ret) ;
+            if (ret.equals("OK"))
+        		return true;
         } catch( Exception e ) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void makeRegisterAzienda(Azienda a) {

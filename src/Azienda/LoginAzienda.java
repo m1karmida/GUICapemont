@@ -94,9 +94,15 @@ public class LoginAzienda extends JFrame {
 
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Azienda az = (Azienda) new Utente(txtUser.getText(),txtPwd.getPassword().toString());
+				
+			Azienda az = new Azienda(txtUser.getText(),new String(txtPwd.getPassword()));
+				
+				txtUser.setText("");
+				txtPwd.setText("");
+				System.out.println("fdadga");
 				try {
 					Client c = new Client("93.88.110.173", 5000);
+					System.out.println("connessione riuscita");
 					if (c.makeLoginAzienda(az)) {
 						GUIAzienda azienda = new GUIAzienda();
 						azienda.setVisible(true);
