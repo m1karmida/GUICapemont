@@ -89,6 +89,7 @@ public class Prodotto implements Serializable {
 		this.a = a;
 	}
 
+	//TODO: formattare i toString
 	@Override
 	public String toString() {
 		return "Prodotto{" +

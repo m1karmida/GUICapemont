@@ -130,7 +130,7 @@ public class Client {
         try {
             obj_out.writeObject(m);
             String ret = in.readLine() ;
-            if (ret.equals("OK"))
+            if (ret.equals("REGISTRAZIONE EFFETTUATA!"))
         		return true;
         } catch( Exception e ) {
             e.printStackTrace();
@@ -138,17 +138,19 @@ public class Client {
         return false;
     }
 
-    public void makeRegisterAzienda(Azienda a) {
+    public boolean makeRegisterAzienda(Azienda a) {
         System.out.println("REGISTERAZIENDA "+a.getEmail()+" "+a.getPassword()) ;
         Messaggio m = new Messaggio("REGISTERAZIENDA",a) ;
 
         try {
             obj_out.writeObject(m);
             String ret = in.readLine() ;
-            System.out.println(ret) ;
+            if (ret.equals("REGISTRAZIONE EFFETTUATA!"))
+            	return true;
         } catch( Exception e ) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void inserisciProdotto(Prodotto p) {
@@ -191,4 +193,14 @@ public class Client {
 
         return prod ;
     }
+    
+    public ArrayList<Prodotto> getListaProdottiAzienda(){
+    	ArrayList<Prodotto> prodotti = new ArrayList<>();
+    	
+    	//TODO: implementare comunicazione client-server per i prodotti azienda
+    	
+    	
+    	return prodotti;
+    }
 }
+

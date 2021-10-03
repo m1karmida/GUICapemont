@@ -95,20 +95,15 @@ public class LoginAzienda extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				System.out.println(txtUser.getText()) ;
-				//System.out.println(txtPwd.getPassword().toString()) ;
-				String s = new String(txtPwd.getPassword()) ;
-				System.out.println(s) ;
-				Azienda az = new Azienda(txtUser.getText(),new String(txtPwd.getPassword()));
-				
+				Azienda az = new Azienda(txtUser.getText(),new String(txtPwd.getPassword()));			
 				txtUser.setText("");
 				txtPwd.setText("");
-				System.out.println("fdadga");
+				
 				try {
 					Client c = new Client("93.88.110.173", 5000);
 					System.out.println("connessione riuscita");
 					if (c.makeLoginAzienda(az)) {
-						GUIAzienda azienda = new GUIAzienda();
+						GUIAzienda azienda = new GUIAzienda(az.getEmail());
 						azienda.setVisible(true);
 						azienda.setDefaultCloseOperation(HIDE_ON_CLOSE);
 						setVisible(false);
