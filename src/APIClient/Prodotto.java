@@ -6,6 +6,7 @@ import java.sql.Date;
 public class Prodotto implements Serializable {
 
 	private static final long serialVersionUID = 6529685098267757690L;
+	private String codice_prodotto ;
 	private String nome;
 	private String categoria;
 	private float prezzo;
@@ -25,10 +26,13 @@ public class Prodotto implements Serializable {
 		this.data = data ;
 		this.a = a ;
 		this.num_acquistato = num_acquistato ;
+		this.codice_prodotto = "" ;
 
 	}
 
 
+	public void setCodice_prodotto(String codice) { this.codice_prodotto = codice; }
+	public String getCodice_prodotto() { return this.codice_prodotto ;}
 
 	public float getPrezzo() {
 		return prezzo;

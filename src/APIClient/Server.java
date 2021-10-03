@@ -37,23 +37,25 @@ public class Server {
                 if (cmd.equals("LOGINUTENTE")) {
 
                     //System.out.println(msg_stream.getObject().getClass()) ;
-                    Utente u = (Utente) msg_stream.getObject() ;
+                    Persona p = (Persona) msg_stream.getObject() ;
 
-                    System.out.println(" RICHIESTA LOGIN UTENTE USERNAME : " + u.getEmail() + " PASSWORD : " + u.getPassword());
-                    if (db.makeLogin(u))
-                        out.println("OK");
+                    System.out.println(" RICHIESTA LOGIN UTENTE USERNAME : " + p.getEmail() + " PASSWORD : " + p.getPassword());
+                    Persona p_ret = db.makeLogin(p) ;
+                    if (p_ret != null )
+                        obj_out.writeObject(p_ret);
                     else
-                        out.println("NO");
+                        obj_out.writeObject(p) ;
 
                 }
                 else if (cmd.equals("LOGINAZIENDA")) {
 
                     Azienda a = (Azienda) msg_stream.getObject() ;
                     System.out.println(" RICHIESTA LOGIN AZIENDA EMAIL : " + a.getEmail() + " PASSWORD : " + a.getPassword());
-                    if (db.makeLoginAzienda(a))
-                        out.println("OK");
+                    Azienda a_ret = db.makeLoginAzienda(a) ;
+                    if (a_ret != null )
+                        obj_out.writeObject(a_ret);
                     else
-                        out.println("NO");
+                        obj_out.writeObject(a);
 
                 }
                 else if (cmd.equals("REGISTERUTENTE")) {
@@ -107,6 +109,13 @@ public class Server {
                     boolean ret = db.inserisciProdotto(p);
                     if (ret) out.println("PRODOTTO INSERITO");
                     else out.println("PRODOTTO NON INSERITO");
+
+                }
+
+                else if( cmd.equals("EFFETTUAORDINE")) {
+                    System.out.println("EFFETTUA ORDINE") ;
+                    Ordine o = (Ordine) msg_stream.getObject() ;
+                    if(db.makeOrder(o)) out.println("PROVA") ;
 
                 }
             } catch ( Exception e ) {
