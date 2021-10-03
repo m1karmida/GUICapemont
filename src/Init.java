@@ -4,8 +4,10 @@ import javax.swing.border.EmptyBorder;
 
 import APIClient.Client;
 import Azienda.LoginAzienda;
+import Azienda.RegisterAzienda;
 import Cliente.GUICliente;
 import Cliente.LoginCliente;
+import Cliente.RegisterCliente;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -176,6 +178,19 @@ public class Init extends JFrame {
 	private void clickRegistra() {
 		btnRegistra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String[] options = new String[2];
+				options[0] = new String("Azienda");
+				options[1] = new String("Cliente");
+				int confirm = JOptionPane.showOptionDialog(null,"Scegli il profilo da registrare: ",null, 0 ,
+																JOptionPane.INFORMATION_MESSAGE,null,options,null);
+				
+				if (confirm == 0) {
+					RegisterAzienda r  =new RegisterAzienda();
+					r.setVisible(true);
+				} else {
+					RegisterCliente c = new RegisterCliente();
+					c.setVisible(true);
+				}
 				
 			}
 		});
