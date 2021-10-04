@@ -157,8 +157,7 @@ public class Client {
         try {
 
             obj_out.writeObject(m);
-            return (Boolean) obj_in.readObject();
-
+            return Boolean.parseBoolean(in.readLine());
         } catch( Exception e ) {
             e.printStackTrace();
         }
@@ -172,7 +171,7 @@ public class Client {
         try {
 
             obj_out.writeObject(m);
-            return (Boolean) obj_in.readObject();
+            return Boolean.parseBoolean(in.readLine());
 
         } catch( Exception e ) {
             e.printStackTrace();

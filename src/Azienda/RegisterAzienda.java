@@ -172,7 +172,9 @@ public class RegisterAzienda extends JFrame {
 						c = new Client("93.88.110.173", 5000);
 						Azienda az = new Azienda(txtIndirizzo.getText(), txtEmail.getText(), txtPassword.getText(),
 								txtNome.getText(),txtPIVA.getText());
-
+						
+						//TODO : implementare i controlli sulle txt
+						
 						if (c.makeRegisterAzienda(az)) {
 						JOptionPane.showMessageDialog(null, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
 						

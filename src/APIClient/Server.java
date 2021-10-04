@@ -56,22 +56,22 @@ public class Server {
                 else if (cmd.equals("REGISTERUTENTE")) {
 
                     Persona p = (Persona) msg_stream.getObject() ;
-                    Boolean ok = new Boolean(false);
                     System.out.println("RICHIESTA REGISTRAZIONE PERSONA "+p.toString());
                     if (db.makeRegister(p))
-                        ok = true;
-                    obj_out.writeObject(ok);
+                        out.println(true);
+                    else
+                        out.println(false);
                 }
 
 
                 else if (cmd.equals("REGISTERAZIENDA")) {
 
                     Azienda a = (Azienda) msg_stream.getObject() ;
-                    Boolean ok = new Boolean(false);
                     System.out.println("RICHIESTA REGISTRAZIONE AZIENDA "+a.toString());
                     if (db.makeRegisterAzienda(a))
-                        ok = true;
-                    obj_out.writeObject(ok);
+                        out.println(true);
+                    else
+                        out.println(false);
 
                 }
 
