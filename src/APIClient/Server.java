@@ -40,24 +40,19 @@ public class Server {
                     Persona p = (Persona) msg_stream.getObject() ;
 
                     System.out.println(" RICHIESTA LOGIN UTENTE USERNAME : " + p.getEmail() + " PASSWORD : " + p.getPassword());
-                    Persona p_ret = db.makeLogin(p) ;
-                    if (p_ret != null )
-                        obj_out.writeObject(p_ret);
-                    else
-                        obj_out.writeObject(p) ;
+                    p = db.makeLogin(p.getEmail(),p.getPassword()) ;
+                    obj_out.writeObject(p);
 
                 }
                 else if (cmd.equals("LOGINAZIENDA")) {
 
                     Azienda a = (Azienda) msg_stream.getObject() ;
                     System.out.println(" RICHIESTA LOGIN AZIENDA EMAIL : " + a.getEmail() + " PASSWORD : " + a.getPassword());
-                    Azienda a_ret = db.makeLoginAzienda(a) ;
-                    if (a_ret != null )
-                        obj_out.writeObject(a_ret);
-                    else
-                        obj_out.writeObject(a);
+                    a = db.makeLoginAzienda(a.getEmail(),a.getPassword()) ;
+                    obj_out.writeObject(a);
 
                 }
+                
                 else if (cmd.equals("REGISTERUTENTE")) {
 
                     Persona p = (Persona) msg_stream.getObject() ;

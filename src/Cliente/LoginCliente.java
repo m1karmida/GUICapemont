@@ -1,4 +1,6 @@
 package Cliente;
+
+import APIClient.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -94,11 +96,13 @@ public class LoginCliente extends JFrame {
 	private void clickLogin() {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Utente u = new Utente(txtUser.getText(),new String(txtPwd.getPassword()));
+				String user = txtUser.getText();
+				String pwd = new String(txtPwd.getPassword());
 				try {
 					Client c = new Client("93.88.110.173", 5000);
-					if (c.makeLoginUtente(u)) {
-						GUICliente cliente = new GUICliente();
+					Persona p = c.makeLoginUtente(user,pwd);
+					if (p!=null) {
+						GUICliente cliente = new GUICliente(p);
 						cliente.setVisible(true);
 						cliente.setDefaultCloseOperation(HIDE_ON_CLOSE);
 						setVisible(false);

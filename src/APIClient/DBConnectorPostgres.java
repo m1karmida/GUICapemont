@@ -9,62 +9,61 @@ public class DBConnectorPostgres {
     private final String user = "postgres" ;
     private final String pwd = "password" ;
 
-    public Persona makeLogin(Persona p) {
+    public Persona makeLogin(String email, String password) {
 
-        String query = "SELECT * FROM PERSONE WHERE EMAIL='"+p.getEmail()+"' AND PASSWORD='"+p.getPassword()+"' ;" ;
-        boolean ok = false ;
+        String query = "SELECT * FROM PERSONE WHERE EMAIL='" + email + "' AND PASSWORD='" + password + "' ;" ;
+        Persona p = null;
+        
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
 
-            while ( rst.next() ) {
-                p.setEmail(rst.getString("EMAIL"));
+            if ( rst.next() ) {
+            	p = new Persona(email, password);	
+            	
                 p.setIndirizzo(rst.getString("INDIRIZZO"));
                 p.setNome(rst.getString("NOME"));
                 p.setCognome(rst.getString("COGNOME")) ;
-                ok = true ;
+                
             }
 
             conn.close() ;
         } catch ( SQLException ex ) {
             System.out.println(ex.getMessage()) ;
         }
-        if ( ok ) return p ;
-
-        return null ;
+        return p;
     }
 
 
-    public Azienda makeLoginAzienda(Azienda a) {
+    
+    
+    public Azienda makeLoginAzienda(String email, String password) {
 
-        String query = "SELECT * FROM AZIENDE WHERE EMAIL='"+a.getEmail()+"' AND PASSWORD='"+a.getPassword()+"' ;" ;
-        boolean ok = false ;
+        String query = "SELECT * FROM AZIENDE WHERE EMAIL='"+ email +"' AND PASSWORD='"+ password +"' ;" ;
+        Azienda az = null;
+        
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
 
-            while ( rst.next() ) {
-
-                a.setIndirizzo(rst.getString("INDIRIZZO"));
-                a.setP_IVA(rst.getString("PIVA"));
-                a.setEmail(rst.getString("EMAIL"));
-                a.setNome(rst.getString("NOME"));
-                a.setPassword(rst.getString("PASSWORD"));
-                ok = true ;
+            if (rst.next()) {
+            	az = new Azienda(email,password);
+                az.setNome(rst.getString("NOME"));
+                az.setP_IVA(rst.getString("PIVA"));
+                az.setIndirizzo(rst.getString("INDIRIZZO"));
             }
 
             conn.close() ;
         } catch ( SQLException ex ) {
             System.out.println(ex.getMessage()) ;
         }
-        if ( ok ) return a ;
-
-        return null ;
+        return az ;
 
     }
 
+    
     public boolean inserisciProdotto( Prodotto p ) {
 
         String query = "INSERT INTO PRODOTTI VALUES (DEFAULT,'"+p.getNome()+"','"+p.getCategoria()+"',"+p.getQuantita()+","+p.getPrezzo()+","+p.getNum_acquistato()+",'"+p.getData()+"','"+p.getA().getEmail()+"','"+p.getFornitore().getCodice()+"');" ; ;

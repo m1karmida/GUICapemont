@@ -16,7 +16,7 @@ public class Azienda extends Utente implements Serializable {
 
 	}
 	public Azienda(String email, String password) {
-		super("",password,email,"") ;
+		super(email,password) ;
 	}
 	public Azienda(String indirizzo, String email, String password, String nome, String P_IVA) {
 		super(indirizzo, password, email, nome);

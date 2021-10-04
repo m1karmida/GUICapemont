@@ -19,14 +19,15 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class GUIAzienda extends JFrame {
-	private String email;
+	
+	private Azienda azienda;
 	private JPanel contentPane;
 	private JButton btnInserisci;
 	private JButton btnVisualizza; 
 	
-	public GUIAzienda(String email) {
-		this.email = email;
-		setTitle("Portale Azienda: " + this.email);
+	public GUIAzienda(Azienda azienda) {
+		this.azienda = azienda;
+		setTitle("Portale Azienda: " + this.azienda.getNome());
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
 		this.contentPane = new JPanel();
@@ -63,7 +64,7 @@ public class GUIAzienda extends JFrame {
 				
 				try {
 					Client c = new Client("93.88.110.173", 5000);
-					ArrayList<Prodotto> listaProdotti = c.getListaProdottiAzienda();
+					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
 					String prodotti = "";
 					
 					for (Prodotto p : listaProdotti)
