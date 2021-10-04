@@ -62,6 +62,7 @@ public class Init extends JFrame {
 	 * Create the frame.
 	 */
 	public Init() {
+		setTitle("Capemont");
 		setBackground(Color.GRAY);
 
 		
@@ -140,7 +141,7 @@ public class Init extends JFrame {
 					.addContainerGap(32, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
-		
+		setLocationRelativeTo(null);
 		addWindowListener(new WindowAdapter() {
 
 			@Override

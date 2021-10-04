@@ -220,6 +220,7 @@ public class DBConnectorPostgres {
         return false ;
     }
 
+
     public boolean makeRegisterAzienda( Azienda a ) {
 
 

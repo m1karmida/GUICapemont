@@ -26,12 +26,14 @@ public class GUIAzienda extends JFrame {
 	
 	public GUIAzienda(String email) {
 		this.email = email;
+		setTitle("Portale Azienda: " + this.email);
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setBounds(100, 100, 450, 300);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setContentPane(this.contentPane);
 		btnInserisci = new JButton("Inserisci");
+		clickInserisci();
 		
 		btnVisualizza = new JButton("Visualizza");
 		clickVisualizza();
@@ -40,11 +42,21 @@ public class GUIAzienda extends JFrame {
 		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addGap(52).addComponent(btnInserisci).addPreferredGap(ComponentPlacement.RELATED, 181, 32767).addComponent(btnVisualizza).addGap(43)));
 		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup().addContainerGap(119, 32767).addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(btnVisualizza).addComponent(btnInserisci)).addGap(109)));
 		this.contentPane.setLayout(gl_contentPane);
-
+		setLocationRelativeTo(null);
 	}
 	
 	
 	/******************* funzioni di supporto **********************************/
+	
+	private void clickInserisci() {
+		btnInserisci.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+	}
+	
+	
 	private void clickVisualizza() {
 		btnVisualizza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

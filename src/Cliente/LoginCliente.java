@@ -88,6 +88,7 @@ public class LoginCliente extends JFrame {
 					.addGap(47))
 		);
 		contentPane.setLayout(gl_contentPane);
+		setLocationRelativeTo(null);
 	}
 	
 	private void clickLogin() {

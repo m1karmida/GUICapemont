@@ -42,6 +42,8 @@ public class Client {
         } catch ( IOException e ) { e.printStackTrace(); }
 
     }
+  
+    
     public static void main(String[] args) throws IOException {
 
         /*Utente u = new Utente("Via Prova 1","password","user1@mail.com","Utente1") ;

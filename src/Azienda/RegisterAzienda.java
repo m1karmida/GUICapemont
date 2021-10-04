@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 
 public class RegisterAzienda extends JFrame {
 	
-	private final RegisterAzienda pointer; 
 	private JPanel contentPane;
 	private GroupLayout gl_contentPane;
 	
@@ -47,7 +46,6 @@ public class RegisterAzienda extends JFrame {
 	
 	public RegisterAzienda() {
 		
-		this.pointer = this;
 		setTitle("Registrazione Azienda");
 		setBounds(100, 100, 332, 321);
 		contentPane = new JPanel();
@@ -159,10 +157,13 @@ public class RegisterAzienda extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+		setLocationRelativeTo(null);
 	}
 	
 	
 	private void clickRegistra() {
+
+		
 		btnRegistra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (txtPassword.getText().equals(txtRPassword.getText())){

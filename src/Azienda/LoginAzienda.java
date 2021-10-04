@@ -35,6 +35,7 @@ public class LoginAzienda extends JFrame {
 	
 
 	public LoginAzienda() {
+		setTitle("Login Azienda");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -88,6 +89,7 @@ public class LoginAzienda extends JFrame {
 					.addGap(47))
 		);
 		contentPane.setLayout(gl_contentPane);
+		setLocationRelativeTo(null);
 	}
 	
 	private void clickLogin() {
