@@ -9,39 +9,60 @@ public class DBConnectorPostgres {
     private final String user = "postgres" ;
     private final String pwd = "password" ;
 
-    public boolean makeLogin(Utente u) {
+    public Persona makeLogin(Persona p) {
 
-        String query = "SELECT * FROM PERSONE WHERE EMAIL='"+u.getEmail()+"' AND PASSWORD='"+u.getPassword()+"' ;" ;
-
+        String query = "SELECT * FROM PERSONE WHERE EMAIL='"+p.getEmail()+"' AND PASSWORD='"+p.getPassword()+"' ;" ;
+        boolean ok = false ;
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
-            if ( rst.next() ) return true ;
+
+            while ( rst.next() ) {
+                p.setEmail(rst.getString("EMAIL"));
+                p.setIndirizzo(rst.getString("INDIRIZZO"));
+                p.setNome(rst.getString("NOME"));
+                p.setCognome(rst.getString("COGNOME")) ;
+                ok = true ;
+            }
 
             conn.close() ;
         } catch ( SQLException ex ) {
             System.out.println(ex.getMessage()) ;
         }
-        return false ;
+        if ( ok ) return p ;
+
+        return null ;
     }
 
 
-    public boolean makeLoginAzienda(Azienda a) {
+    public Azienda makeLoginAzienda(Azienda a) {
 
         String query = "SELECT * FROM AZIENDE WHERE EMAIL='"+a.getEmail()+"' AND PASSWORD='"+a.getPassword()+"' ;" ;
-
+        boolean ok = false ;
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
-            if ( rst.next() ) return true ;
+
+            while ( rst.next() ) {
+
+                a.setIndirizzo(rst.getString("INDIRIZZO"));
+                a.setP_IVA(rst.getString("PIVA"));
+                a.setEmail(rst.getString("EMAIL"));
+                a.setNome(rst.getString("NOME"));
+                a.setPassword(rst.getString("PASSWORD"));
+                ok = true ;
+            }
 
             conn.close() ;
         } catch ( SQLException ex ) {
             System.out.println(ex.getMessage()) ;
         }
-        return false ;
+        if ( ok ) return a ;
+
+        return null ;
+
     }
 
     public boolean inserisciProdotto( Prodotto p ) {
@@ -111,6 +132,7 @@ public class DBConnectorPostgres {
             ResultSet rst = stm.executeQuery(query) ;
             while (rst.next() ) {
 
+                String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
                 String categoria = rst.getString("categoria") ;
                 int quantita = Integer.parseInt(rst.getString("quantita"));
@@ -144,6 +166,7 @@ public class DBConnectorPostgres {
                 }
 
                 Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,num_acquistato,data,a,f) ;
+                p.setCodice_prodotto(codice);
                 prodotti.add(p) ;
 
             }
@@ -159,35 +182,38 @@ public class DBConnectorPostgres {
 
     public ArrayList<Prodotto> getListaProdottiDiAzienda(Azienda a) {
 
-        String query = "SELECT * FROM PRODOTTI WHERE EMAIL='"+a.getEmail()+"' ;" ;
+        String query = "SELECT * FROM PRODOTTI WHERE EMAIL_AZIENDA='"+a.getEmail()+"' ;" ;
         ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>() ;
 
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
+            Statement stm1 = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
             while (rst.next() ) {
 
+                String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
                 String categoria = rst.getString("categoria") ;
-                int quantita = Integer.parseInt(rst.getString("QUANTITÀ"));
+                int quantita = Integer.parseInt(rst.getString("quantita"));
                 float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
                 int num_acquistato = Integer.parseInt(rst.getString("num_acquistato")) ;
                 Date data = Date.valueOf(rst.getString("recente")) ;
                 String codice_fornitore = rst.getString("CODICE_FORNITORE") ;
 
-                rst = stm.executeQuery("SELECT * FROM FORNITORI WHERE CODICE='"+codice_fornitore+"' ;") ;
+                ResultSet rst1 = stm1.executeQuery("SELECT * FROM FORNITORI WHERE CODICE='"+codice_fornitore+"' ;") ;
                 Fornitore f = new Fornitore () ;
-                while ( rst.next() ) {
+                while ( rst1.next() ) {
 
                     f.setCodice(codice_fornitore);
-                    f.setIndirizzo(rst.getString("INDIRIZZO"));
-                    f.setNome(rst.getString("NOME")) ;
-                    f.setTipologia(rst.getString("TIPOLOGIA")) ;
-                    f.setRecapito(rst.getString("RECAPITO")) ;
+                    f.setIndirizzo(rst1.getString("INDIRIZZO"));
+                    f.setNome(rst1.getString("NOME")) ;
+                    f.setTipologia(rst1.getString("TIPOLOGIA")) ;
+                    f.setRecapito(rst1.getString("RECAPITO")) ;
                 }
 
                 Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,num_acquistato,data,a,f) ;
+                p.setCodice_prodotto(codice);
                 prodotti.add(p) ;
 
             }
@@ -237,6 +263,72 @@ public class DBConnectorPostgres {
             System.out.println(ex.getMessage()) ;
         }
         return false ;
+    }
+
+    public boolean makeOrder( Ordine o ) {
+        ArrayList<ProdottoOrdinato> prodotti_ordinati = o.getElenco_prodotti() ;
+
+        try {
+
+            Connection conn = DriverManager.getConnection(url,user,pwd) ;
+            CallableStatement cstmt = conn.prepareCall("{? = CALL check_prodotto(?,?)}") ;
+            boolean check_all_products = true ;
+
+            for (ProdottoOrdinato p : prodotti_ordinati) {
+
+                cstmt.registerOutParameter(1, Types.BOOLEAN) ;
+                System.out.println(p.getCodice_prodotto()) ;
+                cstmt.setInt(2,Integer.parseInt(p.getCodice_prodotto())) ;
+                System.out.println(p.getQuantita_ordinata()) ;
+                cstmt.setInt(3, p.getQuantita_ordinata()) ;
+                cstmt.executeUpdate() ;
+                boolean result = cstmt.getBoolean(1) ;
+                if (!result) check_all_products = false ;
+                System.out.println("RISULTATO CHECK : "+result) ;
+            }
+
+            if ( check_all_products ) {
+
+                CallableStatement cstmt1 = conn.prepareCall("{? = CALL update_quantita_prodotto(?,?)}") ;
+
+                int somma_totale = 0 ;
+                for ( ProdottoOrdinato p : prodotti_ordinati ) {
+                    cstmt1.registerOutParameter(1, Types.BOOLEAN);
+                    cstmt1.setInt(2, Integer.parseInt(p.getCodice_prodotto()));
+                    cstmt1.setInt(3, p.getQuantita_ordinata()) ;
+                    somma_totale += p.getQuantita_ordinata() ;
+                    cstmt1.executeUpdate() ;
+                }
+
+                String query = "INSERT INTO ORDINI VALUES (DEFAULT,'"+o.getData_emissione()+"','"+somma_totale+"','"+o.getAgente().getP_IVA()+"',"+somma_totale+",'"+o.getPersona().getEmail()+"') ;" ;
+                Statement stm = conn.createStatement() ;
+                int exec_insert = stm.executeUpdate(query) ;
+
+                String query2 = "SELECT MAX(CODICE) AS CODICE FROM ORDINI ;" ;
+                Statement stm2 = conn.createStatement() ;
+                ResultSet rst = stm2.executeQuery(query2) ;
+                String codice_ordine = "" ;
+
+                while (rst.next() ) {
+                    codice_ordine = rst.getString("CODICE") ;
+                }
+
+                int insert_done = 0 ;
+                for ( ProdottoOrdinato p : prodotti_ordinati ) {
+
+                    String query3 = "INSERT INTO PRODOTTI_ORDINATI VALUES(DEFAULT,"+codice_ordine+","+p.getCodice_prodotto()+");" ;
+                    Statement stm3 = conn.createStatement() ;
+                    int insert = stm.executeUpdate(query3) ;
+                    System.out.println("Numero di insert effettuati : "+(++insert_done)) ;
+
+                }
+
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return true ;
     }
 
    /* public static void main( String [] args ) {

@@ -1,9 +1,11 @@
 package APIClient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Agente {
+public class Agente implements Serializable {
 
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String P_IVA;
 	private String nome;
 	private String  cognome;
