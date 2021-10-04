@@ -155,10 +155,10 @@ public class Client {
         Messaggio m = new Messaggio("REGISTERUTENTE",p) ;
 
         try {
+
             obj_out.writeObject(m);
-            String ret = in.readLine() ;
-            if (ret.equals("REGISTRAZIONE EFFETTUATA!"))
-        		return true;
+            return (Boolean) obj_in.readObject();
+
         } catch( Exception e ) {
             e.printStackTrace();
         }
@@ -170,10 +170,9 @@ public class Client {
         Messaggio m = new Messaggio("REGISTERAZIENDA",a) ;
 
         try {
+
             obj_out.writeObject(m);
-            String ret = in.readLine() ;
-            System.out.println(ret) ;
-            if (ret.equals("REGISTRAZIONE EFFETTUATA!")) return true ;
+            return (Boolean) obj_in.readObject();
 
         } catch( Exception e ) {
             e.printStackTrace();
