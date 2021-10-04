@@ -7,7 +7,7 @@ public class DBConnectorPostgres {
 
     private final String url = "jdbc:postgresql://localhost/capemont_db" ; //Parametri da se
     private final String user = "postgres" ;
-    private final String pwd = "password" ;
+    private final String pwd = "6454" ;
 
     public Persona makeLogin(String email, String password) {
 
