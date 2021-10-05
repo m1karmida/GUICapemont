@@ -7,9 +7,9 @@ public class ProdottoOrdinato extends Prodotto implements Serializable {
 
     private int quantita_ordinata ;
 
-    public ProdottoOrdinato(String nome, String categoria, float prezzo, int quantita, int num_acquistato, Date data, Azienda a, Fornitore fornitore, int quantita_ordinata) {
+    public ProdottoOrdinato(String nome, String categoria, float prezzo, int quantita, Date data, Azienda a, Fornitore fornitore, int quantita_ordinata) {
 
-        super(nome,categoria,prezzo,quantita,num_acquistato,data,a,fornitore) ;
+        super(nome,categoria,prezzo,quantita,data,a,fornitore) ;
         this.quantita_ordinata = quantita_ordinata ;
 
     }
