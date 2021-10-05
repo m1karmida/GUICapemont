@@ -67,7 +67,7 @@ public class DBConnectorPostgres {
     
     public boolean inserisciProdotto( Prodotto p ) {
 
-        String query = "INSERT INTO PRODOTTI VALUES (DEFAULT,'"+p.getNome()+"','"+p.getCategoria()+"',"+p.getQuantita()+","+p.getPrezzo()+",'"+p.getData()+"','"+p.getA().getEmail()+"','"+p.getFornitore().getCodice()+"');" ; ;
+        String query = "INSERT INTO PRODOTTI VALUES (DEFAULT,'"+p.getNome()+"','"+p.getCategoria()+"',"+p.getQuantita()+","+p.getPrezzo()+",current_date,"+p.getA().getEmail()+"','"+p.getFornitore().getCodice()+"');" ; ;
 
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
