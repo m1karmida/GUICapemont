@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class GUICliente extends JFrame {
@@ -19,11 +21,14 @@ public class GUICliente extends JFrame {
 	private JPanel contentPane;
 	private JButton btnVisualizza;
 	private JButton btnOrdine;
+	private JFrame init;
 
-	public GUICliente(Persona cliente) {
-		this.setCliente(cliente);
+	public GUICliente(Persona cliente, JFrame init) {
+		
+		this.init = init;
+		this.cliente = cliente;
+		
 		setTitle("Portale Cliente: " + cliente.getNome() + " " + cliente.getCognome());
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,7 +59,20 @@ public class GUICliente extends JFrame {
 					.addComponent(btnOrdine, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(63, Short.MAX_VALUE))
 		);
+		
 		contentPane.setLayout(gl_contentPane);
+		
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				setVisible(false);
+				init.setVisible(true);
+			}
+
+
+		});
+		
 		setLocationRelativeTo(null);
 	}
 

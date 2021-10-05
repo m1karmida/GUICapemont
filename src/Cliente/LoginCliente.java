@@ -33,9 +33,10 @@ public class LoginCliente extends JFrame {
 	private JLabel lblUser;
 	private JLabel lblPassword;
 	private JButton btnLogin;
+	private JFrame init;
 	
-	
-	public LoginCliente() {
+	public LoginCliente(JFrame init) {
+		this.init = init;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -102,10 +103,10 @@ public class LoginCliente extends JFrame {
 					Client c = new Client("93.88.110.173", 5000);
 					Persona p = c.makeLoginUtente(user,pwd);
 					if (p!=null) {
-						GUICliente cliente = new GUICliente(p);
+						GUICliente cliente = new GUICliente(p,init);
 						cliente.setVisible(true);
-						cliente.setDefaultCloseOperation(HIDE_ON_CLOSE);
 						setVisible(false);
+						init.setVisible(false);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "credenziali errate");

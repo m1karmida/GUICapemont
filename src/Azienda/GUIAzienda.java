@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +15,8 @@ import javax.swing.border.EmptyBorder;
 import APIClient.Client;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -24,11 +27,13 @@ public class GUIAzienda extends JFrame {
 	private JPanel contentPane;
 	private JButton btnInserisci;
 	private JButton btnVisualizza; 
+	private JFrame init;
 	
-	public GUIAzienda(Azienda azienda) {
+	public GUIAzienda(Azienda azienda, JFrame init) {
+		
+		this.init = init;
 		this.azienda = azienda;
 		setTitle("Portale Azienda: " + this.azienda.getNome());
-		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setBounds(100, 100, 374, 252);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,9 +63,24 @@ public class GUIAzienda extends JFrame {
 					.addComponent(btnVisualizza, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(28, Short.MAX_VALUE))
 		);
+	
 		this.contentPane.setLayout(gl_contentPane);
+		
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				setVisible(false);
+				init.setVisible(true);
+			}
+
+
+		});
+		
 		setLocationRelativeTo(null);
 	}
+	
+	
 	
 	
 	/******************* funzioni di supporto **********************************/
@@ -82,13 +102,21 @@ public class GUIAzienda extends JFrame {
 				try {
 					Client c = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
-					String prodotti = "";
 					
-					for (Prodotto p : listaProdotti)
-						prodotti = prodotti + p.toString() + '\n';
+					String column[] = {"Nome","Categoria","Quantità", "Prezzo"};
+					String data[][] = new String[listaProdotti.size()][4];
+					int i = 0;
 					
+					for (Prodotto p : listaProdotti){
+						data[i][0] = p.getNome();
+						data[i][1] = p.getCategoria();
+						data[i][2] = p.getQuantita() + "";
+						data[i][3] = p.getPrezzo() + "";
+						i++;
+					}
 					
-					JOptionPane.showMessageDialog(null, prodotti );
+					JTable table = new JTable(data, column);
+					JOptionPane.showMessageDialog(null, table);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

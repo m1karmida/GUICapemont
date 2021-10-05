@@ -11,13 +11,12 @@ public class Prodotto implements Serializable {
 	private String categoria;
 	private float prezzo;
 	private int quantita ;
-	private int num_acquistato ;
 	private Date data ;
 	private Azienda a ;
 	private Fornitore fornitore ;
 
 
-	public Prodotto(String nome, String categoria, float prezzo,int quantita, int num_acquistato, Date data,Azienda a, Fornitore fornitore) {
+	public Prodotto(String nome, String categoria, float prezzo,int quantita, Date data,Azienda a, Fornitore fornitore) {
 		this.categoria = categoria;
 		this.quantita = quantita ;
 		this.nome = nome;
@@ -25,7 +24,6 @@ public class Prodotto implements Serializable {
 		this.prezzo = prezzo;
 		this.data = data ;
 		this.a = a ;
-		this.num_acquistato = num_acquistato ;
 		this.codice_prodotto = "" ;
 
 	}
@@ -69,14 +67,6 @@ public class Prodotto implements Serializable {
 		this.prezzo = prezzo;
 	}
 
-	public int getNum_acquistato() {
-		return num_acquistato;
-	}
-
-	public void setNum_acquistato(int num_acquistato) {
-		this.num_acquistato = num_acquistato;
-	}
-
 	public Date getData() {
 		return data;
 	}
@@ -101,7 +91,6 @@ public class Prodotto implements Serializable {
 				", categoria='" + categoria + '\'' +
 				", prezzo=" + prezzo +
 				", quantita=" + quantita +
-				", num_acquistato=" + num_acquistato +
 				", data=" + data +
 				", a=" + a +
 				", fornitore=" + fornitore +

@@ -27,7 +27,7 @@ import javax.swing.*;
 public class Init extends JFrame {
 
 	private GroupLayout gl_contentPane;
-	
+	private JFrame pointer;
 	private JPanel contentPane;
 	
 	private JButton btnCliente;
@@ -62,6 +62,7 @@ public class Init extends JFrame {
 	 * Create the frame.
 	 */
 	public Init() {
+		this.pointer = this;
 		setTitle("Capemont");
 		setBackground(Color.GRAY);
 
@@ -169,7 +170,7 @@ public class Init extends JFrame {
 	private void clickAzienda() {
 		btnAzienda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginAzienda login = new LoginAzienda();
+				LoginAzienda login = new LoginAzienda(pointer);
 				login.setVisible(true);
 			}
 		});
@@ -203,7 +204,7 @@ public class Init extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							LoginCliente frame = new LoginCliente();
+							LoginCliente frame = new LoginCliente(pointer);
 							frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();

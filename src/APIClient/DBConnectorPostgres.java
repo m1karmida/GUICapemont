@@ -67,7 +67,7 @@ public class DBConnectorPostgres {
     
     public boolean inserisciProdotto( Prodotto p ) {
 
-        String query = "INSERT INTO PRODOTTI VALUES (DEFAULT,'"+p.getNome()+"','"+p.getCategoria()+"',"+p.getQuantita()+","+p.getPrezzo()+","+p.getNum_acquistato()+",'"+p.getData()+"','"+p.getA().getEmail()+"','"+p.getFornitore().getCodice()+"');" ; ;
+        String query = "INSERT INTO PRODOTTI VALUES (DEFAULT,'"+p.getNome()+"','"+p.getCategoria()+"',"+p.getQuantita()+","+p.getPrezzo()+",'"+p.getData()+"','"+p.getA().getEmail()+"','"+p.getFornitore().getCodice()+"');" ; ;
 
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
@@ -137,7 +137,6 @@ public class DBConnectorPostgres {
                 String categoria = rst.getString("categoria") ;
                 int quantita = Integer.parseInt(rst.getString("quantita"));
                 float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
-                int num_acquistato = Integer.parseInt(rst.getString("num_acquistato")) ;
                 Date data = Date.valueOf(rst.getString("recente")) ;
                 String codice_fornitore = rst.getString("CODICE_FORNITORE") ;
                 String email_azienda = rst.getString("EMAIL_AZIENDA") ;
@@ -165,7 +164,7 @@ public class DBConnectorPostgres {
 
                 }
 
-                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,num_acquistato,data,a,f) ;
+                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f) ;
                 p.setCodice_prodotto(codice);
                 prodotti.add(p) ;
 
@@ -197,7 +196,6 @@ public class DBConnectorPostgres {
                 String categoria = rst.getString("categoria") ;
                 int quantita = Integer.parseInt(rst.getString("quantita"));
                 float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
-                int num_acquistato = Integer.parseInt(rst.getString("num_acquistato")) ;
                 Date data = Date.valueOf(rst.getString("recente")) ;
                 String codice_fornitore = rst.getString("CODICE_FORNITORE") ;
 
@@ -212,7 +210,7 @@ public class DBConnectorPostgres {
                     f.setRecapito(rst1.getString("RECAPITO")) ;
                 }
 
-                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,num_acquistato,data,a,f) ;
+                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f) ;
                 p.setCodice_prodotto(codice);
                 prodotti.add(p) ;
 

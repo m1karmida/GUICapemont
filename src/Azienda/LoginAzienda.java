@@ -32,9 +32,10 @@ public class LoginAzienda extends JFrame {
 	private JButton btnLogin;
 	private JLabel lblPassword;
 	private JLabel lblUser;
-	
+	private JFrame init;
 
-	public LoginAzienda() {
+	public LoginAzienda(JFrame init) {
+		this.init = init;
 		setTitle("Login Azienda");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -107,9 +108,9 @@ public class LoginAzienda extends JFrame {
 					System.out.println("connessione riuscita");
 					Azienda az = c.makeLoginAzienda(user, password);
 					if ( az != null ) {
-						GUIAzienda azienda = new GUIAzienda(az);
+						GUIAzienda azienda = new GUIAzienda(az, init);
+						init.setVisible(false);
 						azienda.setVisible(true);
-						azienda.setDefaultCloseOperation(HIDE_ON_CLOSE);
 						setVisible(false);
 					}
 					else {
