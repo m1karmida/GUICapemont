@@ -188,7 +188,7 @@ public class Init extends JFrame {
 				if (confirm == 0) {
 					RegisterAzienda r  =new RegisterAzienda();
 					r.setVisible(true);
-				} else {
+				} else if (confirm== 1) {
 					RegisterCliente c = new RegisterCliente();
 					c.setVisible(true);
 				}

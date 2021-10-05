@@ -2,6 +2,7 @@ package APIClient;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DBConnectorPostgres {
 
@@ -148,7 +149,7 @@ public class DBConnectorPostgres {
                     f.setCodice(codice_fornitore);
                     f.setIndirizzo(rst1.getString("INDIRIZZO"));
                     f.setNome(rst1.getString("NOME")) ;
-                    f.setTipologia(rst1.getString("TIPOLOGIA")) ;
+                    f.setTipologia(Enum.valueOf(CategoriaProdotto.class,rst1.getString("TIPOLOGIA").toLowerCase())) ;
                     f.setRecapito(rst1.getString("RECAPITO")) ;
                 }
 
@@ -207,7 +208,7 @@ public class DBConnectorPostgres {
                     f.setCodice(codice_fornitore);
                     f.setIndirizzo(rst1.getString("INDIRIZZO"));
                     f.setNome(rst1.getString("NOME")) ;
-                    f.setTipologia(rst1.getString("TIPOLOGIA")) ;
+                    f.setTipologia(Enum.valueOf(CategoriaProdotto.class,rst1.getString("TIPOLOGIA").toLowerCase())) ;
                     f.setRecapito(rst1.getString("RECAPITO")) ;
                 }
 

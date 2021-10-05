@@ -64,23 +64,23 @@ public class RegisterCliente extends JFrame {
 		lblRipetiPassword = new JLabel("Ripeti password");
 		
 		txtNome = new JTextField();
-		txtNome.setColumns(10);
+		txtNome.setColumns(20);
 		
 		txtCognome = new JTextField();
-		txtCognome.setColumns(10);
+		txtCognome.setColumns(20);
 		
 		txtIndirizzo = new JTextField();
-		txtIndirizzo.setColumns(10);
+		txtIndirizzo.setColumns(20);
 		
 		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
+		txtEmail.setColumns(20);
 		
 
 		txtPassword = new JTextField();
-		txtPassword.setColumns(10);
+		txtPassword.setColumns(20);
 		
 		txtRPassword = new JTextField();
-		txtRPassword.setColumns(10);
+		txtRPassword.setColumns(20);
 		
 		
 		btnRegistra = new JButton("Registra");
