@@ -134,7 +134,7 @@ public class DBConnectorPostgres {
                 String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
                 String tipologia = rst.getString("tipologia") ;
-                String indirizzo = rst.getString("quantita");
+                String indirizzo = rst.getString("indirizzo");
                 String recapito = rst.getString("recapito") ;
 
                 Fornitore f = new Fornitore(nome, indirizzo, recapito, categoria, codice) ;
