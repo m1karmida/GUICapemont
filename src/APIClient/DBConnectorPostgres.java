@@ -168,7 +168,7 @@ public class DBConnectorPostgres {
 
                 String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
-                String categoria = rst.getString("categoria") ;
+                CategoriaProdotto categoria = CategoriaProdotto.valueOf(rst.getString("categoria")) ;
                 int quantita = Integer.parseInt(rst.getString("quantita"));
                 float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
                 Date data = Date.valueOf(rst.getString("recente")) ;
@@ -220,15 +220,15 @@ public class DBConnectorPostgres {
 
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
-            Statement stm = conn.createStatement() ;
+                        Statement stm = conn.createStatement() ;
             Statement stm1 = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
             while (rst.next() ) {
 
                 String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
-                String categoria = rst.getString("categoria") ;
-                int quantita = Integer.parseInt(rst.getString("quantita"));
+                CategoriaProdotto categoria = CategoriaProdotto.valueOf(rst.getString("categoria")) ;
+               int quantita = Integer.parseInt(rst.getString("quantita"));
                 float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
                 Date data = Date.valueOf(rst.getString("recente")) ;
                 String codice_fornitore = rst.getString("CODICE_FORNITORE") ;

@@ -115,7 +115,7 @@ public class GUIAzienda extends JFrame {
 					
 					for (Prodotto p : listaProdotti){
 						data[i][0] = p.getNome();
-						data[i][1] = p.getCategoria();
+						data[i][1] = p.getCategoria().toString();
 						data[i][2] = p.getQuantita() + "";
 						data[i][3] = p.getPrezzo() + "";
 						data[i][4] = p.getFornitore().getNome();

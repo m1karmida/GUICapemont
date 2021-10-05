@@ -78,8 +78,8 @@ public class Server {
                 else if (cmd.equals("GETFORNITORI")) {
 
                     System.out.println("GET LISTA FORNITORI");
-                    CategoriaProdotto categoria  = (CategoriaProdotto) msg_stream.getObject();
-                    obj_out.writeObject(db.getFornitori(categoria));
+                    CategoriaProdottoWrapper categoria  =  (CategoriaProdottoWrapper) msg_stream.getObject();
+                    obj_out.writeObject(db.getFornitori(categoria.getCategoria()));
 
                 }
 

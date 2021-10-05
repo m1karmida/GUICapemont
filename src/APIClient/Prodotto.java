@@ -8,7 +8,7 @@ public class Prodotto implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	private String codice_prodotto ;
 	private String nome;
-	private String categoria;
+	private CategoriaProdotto categoria;
 	private float prezzo;
 	private int quantita ;
 	private Date data ;
@@ -16,13 +16,24 @@ public class Prodotto implements Serializable {
 	private Fornitore fornitore ;
 
 
-	public Prodotto(String nome, String categoria, float prezzo,int quantita, Date data,Azienda a, Fornitore fornitore) {
+	public Prodotto(String nome, CategoriaProdotto categoria, float prezzo,int quantita, Date data,Azienda a, Fornitore fornitore) {
 		this.categoria = categoria;
 		this.quantita = quantita ;
 		this.nome = nome;
 		this.fornitore = fornitore;
 		this.prezzo = prezzo;
 		this.data = data ;
+		this.a = a ;
+		this.codice_prodotto = "" ;
+
+	}
+	
+	public Prodotto(String nome, CategoriaProdotto categoria, float prezzo,int quantita, Azienda a, Fornitore fornitore) {
+		this.categoria = categoria;
+		this.quantita = quantita ;
+		this.nome = nome;
+		this.fornitore = fornitore;
+		this.prezzo = prezzo;
 		this.a = a ;
 		this.codice_prodotto = "" ;
 
@@ -36,7 +47,7 @@ public class Prodotto implements Serializable {
 		return prezzo;
 	}
 
-	public String getCategoria() {
+	public CategoriaProdotto getCategoria() {
 		return categoria;
 	}
 
@@ -55,7 +66,7 @@ public class Prodotto implements Serializable {
 		this.nome = nome;
 	}
 
-	public void setCategoria(String categoria) {
+	public void setCategoria(CategoriaProdotto categoria) {
 		this.categoria = categoria;
 	}
 

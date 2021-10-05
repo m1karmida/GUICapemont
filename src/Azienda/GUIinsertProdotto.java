@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,15 +18,20 @@ import javax.swing.DefaultComboBoxModel;
 import APIClient.Azienda;
 import APIClient.CategoriaProdotto;
 import APIClient.Client;
+import APIClient.Fornitore;
+import APIClient.Prodotto;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GUIinsertProdotto extends JFrame {
 	
@@ -35,17 +41,14 @@ public class GUIinsertProdotto extends JFrame {
 	private JTextField txtNome;
 	private JTextField txtQuantita;
 	private JTextField txtPrezzo;
-    private Client client;
-    private JComboBox comboBox;
-
+    private JButton btnConferma;
+    
 	/**
 	 * Create the frame.
 	 * @throws IOException 
 	 * @throws UnknownHostException 
 	 */
 	public GUIinsertProdotto(Azienda azienda) throws UnknownHostException, IOException {
-		
-		this.client = new Client("93.88.110.173", 5000);
 		this.azienda = azienda;
 		setTitle("Inserimento nuovo prodotto");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -53,14 +56,8 @@ public class GUIinsertProdotto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		comboBox = new JComboBox();
 		cmbCategoria = new JComboBox(CategoriaProdotto.values());
-		cmbCategoria.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				comboBox = new JComboBox((ComboBoxModel) client.getFornitori((CategoriaProdotto) cmbCategoria.getSelectedItem()));
-			}
-		});
-		
+
 		txtNome = new JTextField();
 		txtNome.setColumns(20);
 		
@@ -78,34 +75,32 @@ public class GUIinsertProdotto extends JFrame {
 		
 		JLabel lblPrezzo = new JLabel("Prezzo");
 		
-		JLabel lblNewLabel = new JLabel("Fornitore");
-		
 	
 		
-		JButton btnConferma = new JButton("Conferma");
+		btnConferma = new JButton("Conferma");
+		clickConferma();
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(56)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNome)
 						.addComponent(lblCategoria)
 						.addComponent(lblQuantita)
-						.addComponent(lblPrezzo)
-						.addComponent(lblNewLabel))
+						.addComponent(lblPrezzo))
 					.addPreferredGap(ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(txtPrezzo)
 						.addComponent(txtQuantita)
 						.addComponent(txtNome)
-						.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(cmbCategoria, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(59))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(152)
 					.addComponent(btnConferma)
-					.addContainerGap(183, Short.MAX_VALUE))
+					.addContainerGap(193, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -126,25 +121,61 @@ public class GUIinsertProdotto extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtPrezzo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblPrezzo))
-					.addGap(38)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
+					.addGap(70)
 					.addComponent(btnConferma, GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 		
-		addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				setVisible(false);
-				client.closeConnection();
+	}
+	
+	
+	private void clickConferma() {
+		btnConferma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String nome  = txtNome.getText();
+				int quantita = Integer.parseInt(txtQuantita.getText());
+				float prezzo = Float.parseFloat(txtPrezzo.getText());
+				CategoriaProdotto categoria = (CategoriaProdotto) cmbCategoria.getSelectedItem();
+				
+				try {
+					Client client = new Client("93.88.110.173", 5000);
+					ArrayList<Fornitore> fornitori = client.getFornitori((CategoriaProdotto) cmbCategoria.getSelectedItem());
+					client.closeConnection();
+					String nomiFornitori[] = new String[fornitori.size()];
+					String codiciFornitori[] = new String[fornitori.size()];
+					
+					int i = 0;
+					for (Fornitore f : fornitori) {
+						codiciFornitori[i] = f.getCodice();
+						nomiFornitori[i++] = f.getNome();
+					}
+					
+					JComboBox comboBox = new JComboBox(nomiFornitori);
+					JOptionPane.showMessageDialog(null, comboBox, "Selezione Fornitore",JOptionPane.QUESTION_MESSAGE);
+					
+					int index = comboBox.getSelectedIndex();
+					Fornitore fornitore = null;
+					
+					for (Fornitore f : fornitori)
+						if (f.getCodice().equals(codiciFornitori[index])){
+							fornitore = f;
+							break;
+							}
+					
+					Prodotto p = new Prodotto(nome, categoria, prezzo, quantita,azienda,fornitore);
+					
+					client = new Client("93.88.110.173", 5000);
+					client.inserisciProdotto(p);
+					client.closeConnection();
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
-
-
 		});
 	}
 }
