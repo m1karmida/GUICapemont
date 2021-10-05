@@ -133,6 +133,7 @@ public class GUIinsertProdotto extends JFrame {
 	private void clickConferma() {
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String nome  = txtNome.getText();
 				int quantita = Integer.parseInt(txtQuantita.getText());
 				float prezzo = Float.parseFloat(txtPrezzo.getText());
@@ -168,6 +169,7 @@ public class GUIinsertProdotto extends JFrame {
 					client = new Client("93.88.110.173", 5000);
 					client.inserisciProdotto(p);
 					client.closeConnection();
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -195,7 +195,7 @@ public class Client {
     }
     
     public ArrayList<Fornitore> getFornitori (CategoriaProdotto categoria){
-    	 Messaggio m = new Messaggio("GETFORNITORI",categoria) ;
+    	 Messaggio m = new Messaggio("GETFORNITORI",new CategoriaProdottoWrapper(categoria)) ;
          System.out.println("GETFORNITORI") ;
 
          ArrayList<Fornitore> fornitori = new ArrayList<Fornitore>() ;
