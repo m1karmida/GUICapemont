@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -88,8 +89,13 @@ public class GUIAzienda extends JFrame {
 	private void clickInserisci() {
 		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GUIinsertProdotto insert = new GUIinsertProdotto(azienda);
-				insert.setVisible(true);
+				GUIinsertProdotto insert = null;
+				try {
+					insert = new GUIinsertProdotto(azienda);
+					insert.setVisible(true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -103,8 +109,8 @@ public class GUIAzienda extends JFrame {
 					Client c = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
 					
-					String column[] = {"Nome","Categoria","Quantità", "Prezzo"};
-					String data[][] = new String[listaProdotti.size()][4];
+					String column[] = {"Nome","Categoria","Quantità", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
+					String data[][] = new String[listaProdotti.size()][column.length];
 					int i = 0;
 					
 					for (Prodotto p : listaProdotti){
@@ -112,11 +118,15 @@ public class GUIAzienda extends JFrame {
 						data[i][1] = p.getCategoria();
 						data[i][2] = p.getQuantita() + "";
 						data[i][3] = p.getPrezzo() + "";
+						data[i][4] = p.getFornitore().getNome();
+						data[i][5] = p.getFornitore().getIndirizzo();
 						i++;
 					}
 					
 					JTable table = new JTable(data, column);
-					JOptionPane.showMessageDialog(null, table);
+					JScrollPane tablePane = new JScrollPane(table);
+					tablePane.setSize(table.getWidth(),table.getHeight());
+					JOptionPane.showMessageDialog(null, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

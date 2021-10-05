@@ -118,6 +118,40 @@ public class DBConnectorPostgres {
     }
 
      */
+    public ArrayList<Fornitore> getFornitori(CategoriaProdotto categoria) {
+
+        String query = "SELECT * FROM FORNITORI WHERE tipologia ='" + categoria + "' ;" ;
+        ArrayList<Fornitore> fornitori = new ArrayList<>() ;
+
+        try {
+            Connection conn = DriverManager.getConnection(url,user,pwd) ;
+            Statement stm = conn.createStatement() ;
+            Statement stm1 = conn.createStatement() ;
+            Statement stm2 = conn.createStatement() ;
+            ResultSet rst = stm.executeQuery(query) ;
+            while (rst.next() ) {
+
+                String codice = rst.getString("codice") ;
+                String nome = rst.getString("nome") ;
+                String tipologia = rst.getString("tipologia") ;
+                String indirizzo = rst.getString("quantita");
+                String recapito = rst.getString("recapito") ;
+
+                Fornitore f = new Fornitore(nome, indirizzo, recapito, categoria, codice) ;
+                fornitori.add(f);
+                
+            }
+
+            conn.close() ;
+
+        } catch( Exception e ) {
+            e.printStackTrace();
+        }
+
+        return fornitori ;
+    }
+    
+    
 
     public ArrayList<Prodotto> getListaProdotti() {
 

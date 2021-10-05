@@ -2,6 +2,8 @@ package Azienda;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,14 +11,21 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 import APIClient.Azienda;
 import APIClient.CategoriaProdotto;
+import APIClient.Client;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ItemEvent;
 
 public class GUIinsertProdotto extends JFrame {
 	
@@ -26,12 +35,17 @@ public class GUIinsertProdotto extends JFrame {
 	private JTextField txtNome;
 	private JTextField txtQuantita;
 	private JTextField txtPrezzo;
-
+    private Client client;
+    private JComboBox comboBox;
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public GUIinsertProdotto(Azienda azienda) {
+	public GUIinsertProdotto(Azienda azienda) throws UnknownHostException, IOException {
+		
+		this.client = new Client("93.88.110.173", 5000);
 		this.azienda = azienda;
 		setTitle("Inserimento nuovo prodotto");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -39,8 +53,13 @@ public class GUIinsertProdotto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+		comboBox = new JComboBox();
 		cmbCategoria = new JComboBox(CategoriaProdotto.values());
+		cmbCategoria.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				comboBox = new JComboBox((ComboBoxModel) client.getFornitori((CategoriaProdotto) cmbCategoria.getSelectedItem()));
+			}
+		});
 		
 		txtNome = new JTextField();
 		txtNome.setColumns(20);
@@ -61,7 +80,7 @@ public class GUIinsertProdotto extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Fornitore");
 		
-		JComboBox comboBox = new JComboBox();
+	
 		
 		JButton btnConferma = new JButton("Conferma");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -116,5 +135,16 @@ public class GUIinsertProdotto extends JFrame {
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
+		
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				setVisible(false);
+				client.closeConnection();
+			}
+
+
+		});
 	}
 }

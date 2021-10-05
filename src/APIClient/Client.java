@@ -193,6 +193,25 @@ public class Client {
 
         return prod ;
     }
+    
+    public ArrayList<Fornitore> getFornitori (CategoriaProdotto categoria){
+    	 Messaggio m = new Messaggio("GETFORNITORI",categoria) ;
+         System.out.println("GETFORNITORI") ;
+
+         ArrayList<Fornitore> fornitori = new ArrayList<Fornitore>() ;
+
+         try {
+             obj_out.writeObject(m);
+             fornitori = (ArrayList<Fornitore>) obj_in.readObject() ;
+             for ( Fornitore f : fornitori ) {
+                 System.out.println(f.toString()) ;
+             }
+         } catch ( Exception e ) {
+             e.printStackTrace();
+         }
+
+         return fornitori ;
+    }
 
    /*******************************************************************************/ 
 
