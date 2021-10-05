@@ -1,6 +1,5 @@
 package Azienda;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -43,36 +42,36 @@ public class GUIinsertProdotto extends JFrame {
 	private JTextField txtPrezzo;
     private JButton btnConferma;
     
-	/**
-	 * Create the frame.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
-	 */
-	public GUIinsertProdotto(Azienda azienda) throws UnknownHostException, IOException {
+    
+	public GUIinsertProdotto(Azienda azienda) {
+		
+		
 		this.azienda = azienda;
+		
+		
 		setTitle("Inserimento nuovo prodotto");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 334);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		
+		
 		cmbCategoria = new JComboBox(CategoriaProdotto.values());
-
+		
 		txtNome = new JTextField();
 		txtNome.setColumns(20);
-		
-		JLabel lblNome = new JLabel("Nome prodotto");
-		
-		JLabel lblCategoria = new JLabel("Categoria prodotto");
 		
 		txtQuantita = new JTextField();
 		txtQuantita.setColumns(20);
 		
-		JLabel lblQuantita = new JLabel("Quantit\u00E0");
-		
 		txtPrezzo = new JTextField();
 		txtPrezzo.setColumns(20);
 		
+		
+		JLabel lblNome = new JLabel("Nome prodotto");
+		JLabel lblCategoria = new JLabel("Categoria prodotto");
+		JLabel lblQuantita = new JLabel("Quantit\u00E0");
 		JLabel lblPrezzo = new JLabel("Prezzo");
 		
 	
@@ -131,22 +130,27 @@ public class GUIinsertProdotto extends JFrame {
 	
 	
 	private void clickConferma() {
+		
 		btnConferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				String nome  = txtNome.getText();
 				int quantita = Integer.parseInt(txtQuantita.getText());
 				float prezzo = Float.parseFloat(txtPrezzo.getText());
-				CategoriaProdotto categoria = (CategoriaProdotto) cmbCategoria.getSelectedItem();
+				CategoriaProdotto categoria = (CategoriaProdotto) cmbCategoria.getSelectedItem();				
+				clearTxt();
+				
 				
 				try {
+					
 					Client client = new Client("93.88.110.173", 5000);
 					ArrayList<Fornitore> fornitori = client.getFornitori((CategoriaProdotto) cmbCategoria.getSelectedItem());
 					client.closeConnection();
-					String nomiFornitori[] = new String[fornitori.size()];
-					String codiciFornitori[] = new String[fornitori.size()];
 					
+					String nomiFornitori[] = new String[fornitori.size()];
+					String codiciFornitori[] = new String[fornitori.size()];				
 					int i = 0;
+					
 					for (Fornitore f : fornitori) {
 						codiciFornitori[i] = f.getCodice();
 						nomiFornitori[i++] = f.getNome();
@@ -167,8 +171,13 @@ public class GUIinsertProdotto extends JFrame {
 					Prodotto p = new Prodotto(nome, categoria, prezzo, quantita,azienda,fornitore);
 					
 					client = new Client("93.88.110.173", 5000);
-					client.inserisciProdotto(p);
+					String message = "";
+					if (client.inserisciProdotto(p))
+						message = "Prodotto inserito con successo!";
+					else 
+						message = "Errore nell'inserimento del prodotto: Riprovare";
 					client.closeConnection();
+					JOptionPane.showMessageDialog(null, message);
 					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -177,5 +186,16 @@ public class GUIinsertProdotto extends JFrame {
 				
 			}
 		});
+	}
+	
+	
+	
+	private void clearTxt() {
+		
+		txtNome.setText("");
+		txtPrezzo.setText("");
+		txtQuantita.setText("");
+		cmbCategoria.setSelectedIndex(-1);
+		
 	}
 }

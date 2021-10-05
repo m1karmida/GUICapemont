@@ -90,12 +90,8 @@ public class GUIAzienda extends JFrame {
 		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GUIinsertProdotto insert = null;
-				try {
 					insert = new GUIinsertProdotto(azienda);
 					insert.setVisible(true);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
 		});
 	}

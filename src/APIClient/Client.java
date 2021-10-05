@@ -153,7 +153,7 @@ public class Client {
     }
 
     
-    public void inserisciProdotto(Prodotto p) {
+    public boolean inserisciProdotto(Prodotto p) {
 
         Messaggio m = new Messaggio("INSERISCIPRODOTTO",p) ;
 
@@ -164,12 +164,15 @@ public class Client {
             obj_out.writeObject(m) ;
             String ret = in.readLine() ;
             System.out.println(ret) ;
-
+            if (ret.equals("PRODOTTO INSERITO"))
+            	return true;
         } catch( Exception e ) {
 
             e.printStackTrace();
 
         }
+        
+        return false;
 
     }
     
