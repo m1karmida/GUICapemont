@@ -1,6 +1,8 @@
 package APIClient;
 
-public class CategoriaProdottoWrapper {
+import java.io.Serializable;
+
+public class CategoriaProdottoWrapper implements Serializable {
 	private CategoriaProdotto categoria;
 	
 	public CategoriaProdottoWrapper(CategoriaProdotto categoria) {
