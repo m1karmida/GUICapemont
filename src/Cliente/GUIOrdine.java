@@ -136,7 +136,7 @@ public class GUIOrdine extends JFrame {
 			int i = 0;
 			
 			for (Agente a : agenti) {
-				nomiCogAgenti[i] = a.getNome() + " " + a.getCognome();
+				nomiCogAgenti[i] = a.getNome() + " " + a.getCognome() + "\t" + a.getIndirizzo();
 				emailAgenti[i++] = a.getEmail();
 			}
 			
@@ -167,7 +167,7 @@ public class GUIOrdine extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index =  tbProdotto.getSelectedRow();
-				int quantità = Integer.parseInt(JOptionPane.showInputDialog(null, "Hai selezionato " + data[index][0] + ". Inserisci la quantità da ordinare :" ));
+				int quantità = Integer.parseInt(JOptionPane.showInputDialog(null, "Hai selezionato " + data[index][1] + ". Inserisci la quantità da ordinare :" ));
 				if (Integer.parseInt(data[index][2]) > quantità) {
 					txtCarrello.append(data[index][1] + "\t" + quantità + "\n");
 					quantità = Integer.parseInt(data[index][2]) - quantità;
@@ -179,6 +179,7 @@ public class GUIOrdine extends JFrame {
 							prodotto = p;
 							break;
 						}
+
 					ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantità));
 					
 				} else

@@ -18,6 +18,7 @@ public class Ordine implements Serializable {
 		this.codice = codice;
 		this.data_emissione = data_emissione;
 		this.persona = persona ;
+		this.elenco_prodotti = new ArrayList<>();
 	}
 
 	public Persona getPersona() {
