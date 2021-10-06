@@ -92,6 +92,8 @@ public class GUICliente extends JFrame {
 	
 		btnOrdine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				GUIOrdine ordine = new GUIOrdine(cliente);
+				ordine.setVisible(true);
 			}
 		});
 	

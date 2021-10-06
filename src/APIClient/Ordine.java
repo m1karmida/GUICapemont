@@ -9,21 +9,14 @@ public class Ordine implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 	private String codice;
 	private Date data_emissione;
-	private int qta_venduta;
 	private Agente agente;
 	private Persona persona ;
 	private ArrayList<ProdottoOrdinato> elenco_prodotti;
 
-	public Ordine(String codice,
-				  Date data_emissione, int qta_venduta, Agente agente, ArrayList<ProdottoOrdinato> elenco_prodotti, Persona persona) {
+	public Ordine(String codice,Date data_emissione,  Agente agente, Persona persona) {
 		this.agente = agente;
 		this.codice = codice;
-
 		this.data_emissione = data_emissione;
-
-
-		this.qta_venduta = qta_venduta;
-		this.elenco_prodotti = elenco_prodotti;
 		this.persona = persona ;
 	}
 
@@ -35,8 +28,8 @@ public class Ordine implements Serializable {
 		this.persona = persona;
 	}
 
-	public void setElenco_prodotti(ArrayList<ProdottoOrdinato> elenco_prodotti) {
-		this.elenco_prodotti = elenco_prodotti;
+	public void addElenco_prodotti(ProdottoOrdinato prodotto) {
+		this.elenco_prodotti.add(prodotto);
 	}
 
 	public ArrayList<ProdottoOrdinato> getElenco_prodotti() {
@@ -47,9 +40,7 @@ public class Ordine implements Serializable {
 		return data_emissione;
 	}
 
-	public int getQta_venduta() {
-		return qta_venduta;
-	}
+
 
 	public Agente getAgente() {
 		return agente;
@@ -72,8 +63,5 @@ public class Ordine implements Serializable {
 		this.data_emissione = data_emissione;
 	}
 
-	public void setQta_venduta(int qta_venduta) {
-		this.qta_venduta = qta_venduta;
-	}
 
 }

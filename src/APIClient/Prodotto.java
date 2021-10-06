@@ -16,7 +16,7 @@ public class Prodotto implements Serializable {
 	private Fornitore fornitore ;
 
 
-	public Prodotto(String nome, CategoriaProdotto categoria, float prezzo,int quantita, Date data,Azienda a, Fornitore fornitore) {
+	public Prodotto(String nome, CategoriaProdotto categoria, float prezzo,int quantita, Date data,Azienda a, Fornitore fornitore, String codice_prodotto) {
 		this.categoria = categoria;
 		this.quantita = quantita ;
 		this.nome = nome;
@@ -24,7 +24,7 @@ public class Prodotto implements Serializable {
 		this.prezzo = prezzo;
 		this.data = data ;
 		this.a = a ;
-		this.codice_prodotto = "" ;
+		this.codice_prodotto = codice_prodotto;
 
 	}
 	
