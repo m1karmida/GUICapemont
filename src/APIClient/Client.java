@@ -227,7 +227,7 @@ public class Client {
     
     
     public ArrayList<Agente> getAgenti (){
-   	 Messaggio m = new Messaggio("GETFORNITORI",null) ;
+   	 Messaggio m = new Messaggio("GETAGENTI",null) ;
         System.out.println("GETAGENTI ") ;
 
         ArrayList<Agente> agenti = new ArrayList<>() ;
