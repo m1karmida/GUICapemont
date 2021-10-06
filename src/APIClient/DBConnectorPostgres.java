@@ -155,7 +155,7 @@ public class DBConnectorPostgres {
     
     public ArrayList<Agente> getAgenti() {
 
-        String query = "SELECT * FROM FORNITORI;" ;
+        String query = "SELECT * FROM AGENTI;" ;
         ArrayList<Agente> agenti = new ArrayList<>() ;
 
         try {
