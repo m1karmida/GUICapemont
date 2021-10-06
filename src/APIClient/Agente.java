@@ -9,31 +9,27 @@ public class Agente implements Serializable {
 	private String P_IVA;
 	private String nome;
 	private String  cognome;
+	private String email;
 	private String indirizzo;
-	private String recapito;
-	private String ruolo; //responsabile o agente comune
-	private String codice;
+	private String recapito; 
+	private String ruolo;
 	private ArrayList<Ordine> ordini_gestiti;
 
-	public Agente(String P_IVA, String nome, String cognome, String indirizzo, String recapito, String ruolo,
-				  String codice, ArrayList ordini_gestiti){
-		this.codice = codice;
+	public Agente(String P_IVA, String nome, String cognome, String indirizzo, String email, String ruolo, String recapito){
 		this.nome = nome;
 		this.cognome = cognome;
 		this.indirizzo = indirizzo;
 		this.P_IVA = P_IVA;
 		this.recapito = recapito;
 		this.ruolo = ruolo;
-		this.ordini_gestiti = ordini_gestiti;
+		this.setEmail(email);
+		this.ordini_gestiti = new ArrayList<>();
 	}
 
 	public ArrayList getOrdini_gestiti() {
 		return ordini_gestiti;
 	}
 
-	public String getCodice() {
-		return codice;
-	}
 
 	public String getNome() {
 		return nome;
@@ -59,12 +55,8 @@ public class Agente implements Serializable {
 		return ruolo;
 	}
 
-	public void setOrdini_gestiti(ArrayList ordini_gestiti) {
-		this.ordini_gestiti = ordini_gestiti;
-	}
-
-	public void setCodice(String codice) {
-		this.codice = codice;
+	public void addOrdini_gestiti(Ordine ordine) {
+		this.ordini_gestiti.add(ordine);
 	}
 
 	public void setNome(String nome) {
@@ -89,6 +81,14 @@ public class Agente implements Serializable {
 
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

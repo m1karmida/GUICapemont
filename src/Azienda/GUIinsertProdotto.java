@@ -195,7 +195,6 @@ public class GUIinsertProdotto extends JFrame {
 		txtNome.setText("");
 		txtPrezzo.setText("");
 		txtQuantita.setText("");
-		cmbCategoria.setSelectedIndex(-1);
 		
 	}
 }

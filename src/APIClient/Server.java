@@ -17,6 +17,7 @@ public class Server {
         DBConnectorPostgres db = new DBConnectorPostgres() ;
 
         String inputLine;
+       
         while ( true ) {
             clientSocket = serverSocket.accept() ;
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -80,6 +81,13 @@ public class Server {
                     System.out.println("GET LISTA FORNITORI");
                     CategoriaProdottoWrapper categoria  =  (CategoriaProdottoWrapper) msg_stream.getObject();
                     obj_out.writeObject(db.getFornitori(categoria.getCategoria()));
+
+                }
+                
+                else if (cmd.equals("GETAGENTI")) {
+
+                    System.out.println("GET LISTA AGENTI");
+                    obj_out.writeObject(db.getAgenti());
 
                 }
 

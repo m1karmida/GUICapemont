@@ -118,6 +118,8 @@ public class DBConnectorPostgres {
     }
 
      */
+   
+    
     public ArrayList<Fornitore> getFornitori(CategoriaProdotto categoria) {
 
         String query = "SELECT * FROM FORNITORI WHERE tipologia ='" + categoria + "' ;" ;
@@ -126,14 +128,11 @@ public class DBConnectorPostgres {
         try {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             Statement stm = conn.createStatement() ;
-            Statement stm1 = conn.createStatement() ;
-            Statement stm2 = conn.createStatement() ;
             ResultSet rst = stm.executeQuery(query) ;
             while (rst.next() ) {
 
                 String codice = rst.getString("codice") ;
                 String nome = rst.getString("nome") ;
-                String tipologia = rst.getString("tipologia") ;
                 String indirizzo = rst.getString("indirizzo");
                 String recapito = rst.getString("recapito") ;
 
@@ -153,6 +152,42 @@ public class DBConnectorPostgres {
     
     
 
+    
+    public ArrayList<Agente> getAgenti() {
+
+        String query = "SELECT * FROM FORNITORI;" ;
+        ArrayList<Agente> agenti = new ArrayList<>() ;
+
+        try {
+            Connection conn = DriverManager.getConnection(url,user,pwd) ;
+            Statement stm = conn.createStatement() ;
+            ResultSet rst = stm.executeQuery(query) ;
+            while (rst.next() ) {
+
+                String pIVA = rst.getString("piva") ;
+                String nome = rst.getString("nome") ;
+                String cognome = rst.getString("cognome") ;
+                String indirizzo = rst.getString("indirizzo");
+                String email = rst.getString("email");
+                String recapito = rst.getString("recapito") ;
+                String ruolo = rst.getString("ruolo");
+
+                Agente agente = new Agente(pIVA, nome, cognome, indirizzo, email, ruolo, recapito);
+                agenti.add(agente);
+                
+            }
+
+            conn.close() ;
+
+        } catch( Exception e ) {
+            e.printStackTrace();
+        }
+
+        return agenti ;
+    }
+    
+    
+    
     public ArrayList<Prodotto> getListaProdotti() {
 
         String query = "SELECT * FROM PRODOTTI;" ;
@@ -198,8 +233,7 @@ public class DBConnectorPostgres {
 
                 }
 
-                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f) ;
-                p.setCodice_prodotto(codice);
+                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f,codice) ;
                 prodotti.add(p) ;
 
             }
@@ -244,8 +278,7 @@ public class DBConnectorPostgres {
                     f.setRecapito(rst1.getString("RECAPITO")) ;
                 }
 
-                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f) ;
-                p.setCodice_prodotto(codice);
+                Prodotto p = new Prodotto(nome,categoria,prezzo,quantita,data,a,f,codice) ;
                 prodotti.add(p) ;
 
             }
