@@ -172,7 +172,7 @@ public class GUIOrdine extends JFrame {
 					txtCarrello.append(data[index][1] + "\t" + quantità + "\n");
 					quantità = Integer.parseInt(data[index][2]) - quantità;
 					data[index][1] = quantità + "";
-					tbProdotto.setValueAt(quantità + "", index, 1);
+					tbProdotto.setValueAt(quantità + "", index, 2);
 					Prodotto prodotto = null;
 					for (Prodotto p : listaProdotti)
 						if (p.getCodice_prodotto().equals(data[index][0])) {
