@@ -388,7 +388,7 @@ public class DBConnectorPostgres {
                 int insert_done = 0 ;
                 for ( ProdottoOrdinato p : prodotti_ordinati ) {
 
-                    String query3 = "INSERT INTO PRODOTTI_ORDINATI VALUES(DEFAULT,"+codice_ordine+","+p.getCodice_prodotto()+");" ;
+                    String query3 = "INSERT INTO PRODOTTI_ORDINATI VALUES(DEFAULT,"+codice_ordine+","+p.getCodice_prodotto()+"," + p.getQuantita_ordinata() + ");" ;
                     Statement stm3 = conn.createStatement() ;
                     int insert = stm.executeUpdate(query3) ;
                     System.out.println("Numero di insert effettuati : "+(++insert_done)) ;
