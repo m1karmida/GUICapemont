@@ -339,17 +339,23 @@ public class DBConnectorPostgres {
             CallableStatement cstmt = conn.prepareCall("{? = CALL check_prodotto(?,?)}") ;
             boolean check_all_products = true ;
 
+            int quantitaTotale = 0;
+            float prezzoTotale = 0;
+
             for (ProdottoOrdinato p : prodotti_ordinati) {
 
+                System.out.println( p.getNome() + " " + p.getQuantita_ordinata()) ;
+                quantitaTotale+=p.getQuantita_ordinata();
+                prezzoTotale+= (p.getPrezzo()*p.getQuantita_ordinata());
+
                 cstmt.registerOutParameter(1, Types.BOOLEAN) ;
-                System.out.println(p.getCodice_prodotto()) ;
                 cstmt.setInt(2,Integer.parseInt(p.getCodice_prodotto())) ;
-                System.out.println(p.getQuantita_ordinata()) ;
                 cstmt.setInt(3, p.getQuantita_ordinata()) ;
                 cstmt.executeUpdate() ;
+
                 boolean result = cstmt.getBoolean(1) ;
                 if (!result) check_all_products = false ;
-                System.out.println("RISULTATO CHECK : "+result) ;
+                System.out.println("RISULTATO CHECK : "+ result) ;
             }
 
             if ( check_all_products ) {
@@ -357,6 +363,7 @@ public class DBConnectorPostgres {
                 CallableStatement cstmt1 = conn.prepareCall("{? = CALL update_quantita_prodotto(?,?)}") ;
 
                 int somma_totale = 0 ;
+
                 for ( ProdottoOrdinato p : prodotti_ordinati ) {
                     cstmt1.registerOutParameter(1, Types.BOOLEAN);
                     cstmt1.setInt(2, Integer.parseInt(p.getCodice_prodotto()));
@@ -365,7 +372,7 @@ public class DBConnectorPostgres {
                     cstmt1.executeUpdate() ;
                 }
 
-                String query = "INSERT INTO ORDINI VALUES (DEFAULT,'"+o.getData_emissione()+"','"+somma_totale+"','"+o.getAgente().getP_IVA()+"',"+somma_totale+",'"+o.getPersona().getEmail()+"') ;" ;
+                String query = "INSERT INTO ORDINI VALUES (DEFAULT,'"+o.getData_emissione()+"','"+ somma_totale +"','"+o.getAgente().getP_IVA()+"'," + prezzoTotale +",'"+o.getPersona().getEmail()+"') ;" ;
                 Statement stm = conn.createStatement() ;
                 int exec_insert = stm.executeUpdate(query) ;
 
