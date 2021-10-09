@@ -1,4 +1,6 @@
-package APIClient;
+package DomainClasses;
+
+import DomainClasses.CategoriaProdotto;
 
 import java.io.Serializable;
 

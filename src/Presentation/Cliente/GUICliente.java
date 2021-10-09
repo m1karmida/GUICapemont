@@ -1,12 +1,10 @@
-package Cliente;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package Presentation.Cliente;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.Persona;
+import DomainClasses.Persona;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -28,7 +26,7 @@ public class GUICliente extends JFrame {
 		this.init = init;
 		this.cliente = cliente;
 		
-		setTitle("Portale Cliente: " + cliente.getNome() + " " + cliente.getCognome());
+		setTitle("Portale Presentation.Cliente: " + cliente.getNome() + " " + cliente.getCognome());
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

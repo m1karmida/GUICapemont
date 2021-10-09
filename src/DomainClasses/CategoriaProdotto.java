@@ -1,4 +1,4 @@
-package APIClient;
+package DomainClasses;
 
 public enum CategoriaProdotto {
 	elettronica,

@@ -1,9 +1,6 @@
-package Cliente;
+package Presentation.Cliente;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,9 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.*;
+import Business.*;
+import DomainClasses.*;
 
-import javax.swing.JSpinner;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextArea;
@@ -56,7 +53,7 @@ public class GUIOrdine extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		String column[] = {"Codice","Nome", "Disponibilità", "Prezzo", "Fornitore", "Azienda"};
+		String column[] = {"Codice","Nome", "Disponibilitï¿½", "Prezzo", "Fornitore", "Azienda"};
 		populateTable(column.length);
 
 		tbProdotto = new JTable(data, column);
@@ -167,12 +164,12 @@ public class GUIOrdine extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index =  tbProdotto.getSelectedRow();
-				int quantità = Integer.parseInt(JOptionPane.showInputDialog(null, "Hai selezionato " + data[index][1] + ". Inserisci la quantità da ordinare :" ));
-				if (Integer.parseInt(data[index][2]) > quantità) {
-					txtCarrello.append(data[index][1] + "\t" + quantità + "\n");
-					int quantitàRimasta = Integer.parseInt(data[index][2]) - quantità;
-					data[index][2] = quantitàRimasta + "";
-					tbProdotto.setValueAt(quantitàRimasta + "", index, 2);
+				int quantita = Integer.parseInt(JOptionPane.showInputDialog(null, "Hai selezionato " + data[index][1] + ". Inserisci la quantitï¿½ da ordinare :" ));
+				if (Integer.parseInt(data[index][2]) > quantita) {
+					txtCarrello.append(data[index][1] + "\t" + quantita + "\n");
+					int quantitaRimasta = Integer.parseInt(data[index][2]) - quantita;
+					data[index][2] = quantitaRimasta + "";
+					tbProdotto.setValueAt(quantitaRimasta + "", index, 2);
 					Prodotto prodotto = null;
 					for (Prodotto p : listaProdotti)
 						if (p.getCodice_prodotto().equals(data[index][0])) {
@@ -180,10 +177,10 @@ public class GUIOrdine extends JFrame {
 							break;
 						}
 
-					ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantità));
+					ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantita));
 					
 				} else
-					JOptionPane.showMessageDialog(null, "Errore: quantità maggiore della disponibilità!");
+					JOptionPane.showMessageDialog(null, "Errore: quantitï¿½ maggiore della disponibilitï¿½!");
 			}
 		});
 	}

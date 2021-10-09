@@ -1,6 +1,4 @@
-package Azienda;
-
-import APIClient.*;
+package Presentation.Azienda;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -10,10 +8,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.Client;
+import DomainClasses.Azienda ;
+
+import Business.Client;
+import DomainClasses.Prodotto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -34,7 +34,7 @@ public class GUIAzienda extends JFrame {
 		
 		this.init = init;
 		this.azienda = azienda;
-		setTitle("Portale Azienda: " + this.azienda.getNome());
+		setTitle("Portale Presentation.Azienda: " + this.azienda.getNome());
 		this.setBounds(100, 100, 374, 252);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,7 +105,7 @@ public class GUIAzienda extends JFrame {
 					Client c = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
 					
-					String column[] = {"Nome","Categoria","Quantità", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
+					String column[] = {"Nome","Categoria","Quantitï¿½", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
 					String data[][] = new String[listaProdotti.size()][column.length];
 					int i = 0;
 					

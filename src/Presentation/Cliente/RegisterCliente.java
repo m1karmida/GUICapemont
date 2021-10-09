@@ -1,15 +1,12 @@
-package Cliente;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package Presentation.Cliente;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.Azienda;
-import APIClient.Client;
-import APIClient.Persona;
+
+import Business.Client;
+import DomainClasses.Persona;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -49,7 +46,7 @@ public class RegisterCliente extends JFrame {
 	public RegisterCliente() {
 		
 		this.pointer = this;
-		setTitle("Registrazione Cliente");
+		setTitle("Registrazione Presentation.Cliente");
 		setBounds(100, 100, 332, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -1,10 +1,12 @@
-package APIClient;
+package Persistence;
+
+import DomainClasses.ProdottoOrdinato;
+import DomainClasses.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class DBConnectorPostgres {
+public class CapemontDAO implements CapemontDAOInterface {
 
     private final String url = "jdbc:postgresql://localhost/capemont_db" ; //Parametri da se
     private final String user = "postgres" ;

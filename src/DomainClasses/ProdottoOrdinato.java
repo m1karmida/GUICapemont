@@ -1,4 +1,9 @@
-package APIClient;
+package DomainClasses;
+
+import DomainClasses.Azienda;
+import DomainClasses.CategoriaProdotto;
+import DomainClasses.Fornitore;
+import DomainClasses.Prodotto;
 
 import java.io.Serializable;
 import java.sql.Date;

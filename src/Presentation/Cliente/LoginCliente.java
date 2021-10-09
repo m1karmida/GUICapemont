@@ -1,15 +1,11 @@
-package Azienda;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package Presentation.Cliente;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.Azienda;
-import APIClient.Client;
-import APIClient.Persona;
-import APIClient.Utente;
+import Business.Client;
+import DomainClasses.Persona;
 
 import javax.swing.JPasswordField;
 import javax.swing.GroupLayout;
@@ -21,22 +17,20 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
-public class LoginAzienda extends JFrame {
+public class LoginCliente extends JFrame {
 
 	private JPanel contentPane;
 	private JPasswordField txtPwd;
 	private JTextField txtUser;
-	private JButton btnLogin;
-	private JLabel lblPassword;
 	private JLabel lblUser;
+	private JLabel lblPassword;
+	private JButton btnLogin;
 	private JFrame init;
-
-	public LoginAzienda(JFrame init) {
+	
+	public LoginCliente(JFrame init) {
 		this.init = init;
-		setTitle("Login Azienda");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,6 +49,7 @@ public class LoginAzienda extends JFrame {
 		
 		btnLogin = new JButton("Login");
 		clickLogin();
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -94,24 +89,18 @@ public class LoginAzienda extends JFrame {
 	}
 	
 	private void clickLogin() {
-
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				String user = txtUser.getText();
-				String password = new String(txtPwd.getPassword());			
-				
-				txtUser.setText("");
-				txtPwd.setText("");
+				String pwd = new String(txtPwd.getPassword());
 				try {
 					Client c = new Client("93.88.110.173", 5000);
-					System.out.println("connessione riuscita");
-					Azienda az = c.makeLoginAzienda(user, password);
-					if ( az != null ) {
-						GUIAzienda azienda = new GUIAzienda(az, init);
-						init.setVisible(false);
-						azienda.setVisible(true);
+					Persona p = c.makeLoginUtente(user,pwd);
+					if (p!=null) {
+						GUICliente cliente = new GUICliente(p,init);
+						cliente.setVisible(true);
 						setVisible(false);
+						init.setVisible(false);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "credenziali errate");
@@ -121,6 +110,7 @@ public class LoginAzienda extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 			}
 		});
 	}

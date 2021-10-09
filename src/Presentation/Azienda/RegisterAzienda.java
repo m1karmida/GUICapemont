@@ -1,14 +1,11 @@
-package Azienda;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+package Presentation.Azienda;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import APIClient.Azienda;
-import APIClient.Client;
+import Business.Client;
+import DomainClasses.Azienda;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -46,7 +43,7 @@ public class RegisterAzienda extends JFrame {
 	
 	public RegisterAzienda() {
 		
-		setTitle("Registrazione Azienda");
+		setTitle("Registrazione Presentation.Azienda");
 		setBounds(100, 100, 332, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

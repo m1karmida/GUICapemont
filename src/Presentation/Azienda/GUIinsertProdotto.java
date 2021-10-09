@@ -1,8 +1,6 @@
-package Azienda;
+package Presentation.Azienda;
 
-import java.awt.EventQueue;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,24 +9,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 
-import APIClient.Azienda;
-import APIClient.CategoriaProdotto;
-import APIClient.Client;
-import APIClient.Fornitore;
-import APIClient.Prodotto;
+import DomainClasses.Azienda;
+import DomainClasses.CategoriaProdotto;
+import Business.Client;
+import DomainClasses.Fornitore;
+import DomainClasses.Prodotto;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

@@ -1,13 +1,12 @@
+package Presentation;
+
 import java.awt.EventQueue;
 
-import javax.swing.border.EmptyBorder;
-
-import APIClient.Client;
-import Azienda.LoginAzienda;
-import Azienda.RegisterAzienda;
-import Cliente.GUICliente;
-import Cliente.LoginCliente;
-import Cliente.RegisterCliente;
+import Business.Client;
+import Presentation.Azienda.LoginAzienda;
+import Presentation.Azienda.RegisterAzienda;
+import Presentation.Cliente.LoginCliente;
+import Presentation.Cliente.RegisterCliente;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -16,8 +15,6 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.*;
-import java.io.IOException;
-import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
 import java.awt.*;

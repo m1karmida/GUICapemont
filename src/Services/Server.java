@@ -1,4 +1,12 @@
-package APIClient;
+package Services;
+
+import DomainClasses.CategoriaProdottoWrapper;
+import Business.Messaggio;
+import Persistence.CapemontDAO;
+import DomainClasses.Azienda;
+import DomainClasses.Ordine;
+import DomainClasses.Persona;
+import DomainClasses.Prodotto;
 
 import java.net.*;
 import java.io.*;
@@ -14,7 +22,7 @@ public class Server {
         ObjectOutputStream obj_out ;
         ObjectInputStream obj_in ;
 
-        DBConnectorPostgres db = new DBConnectorPostgres() ;
+        CapemontDAO db = new CapemontDAO() ;
 
         String inputLine;
        
