@@ -28,10 +28,12 @@ public class LoginAzienda extends JFrame {
 	private JLabel lblPassword;
 	private JLabel lblUser;
 	private JFrame init;
+	private GroupLayout gl_contentPane;
 
+	
 	public LoginAzienda(JFrame init) {
 		this.init = init;
-		setTitle("Login Presentation.Azienda");
+		setTitle("Login Azienda");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -51,7 +53,13 @@ public class LoginAzienda extends JFrame {
 		btnLogin = new JButton("Login");
 		clickLogin();
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		setComponents();
+	}
+	
+	
+	private void setComponents() {
+		
+		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
@@ -85,7 +93,8 @@ public class LoginAzienda extends JFrame {
 					.addGap(47))
 		);
 		contentPane.setLayout(gl_contentPane);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(init);
+		
 	}
 	
 	private void clickLogin() {
@@ -94,29 +103,38 @@ public class LoginAzienda extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				String user = txtUser.getText();
-				String password = new String(txtPwd.getPassword());			
-				
+				String password = new String(txtPwd.getPassword());	
+
 				txtUser.setText("");
 				txtPwd.setText("");
-				try {
-					Client c = new Client("93.88.110.173", 5000);
-					System.out.println("connessione riuscita");
-					Azienda az = c.makeLoginAzienda(user, password);
-					if ( az != null ) {
-						GUIAzienda azienda = new GUIAzienda(az, init);
-						init.setVisible(false);
-						azienda.setVisible(true);
-						setVisible(false);
+				
+				if (user.equals("") || password.equals(""))
+					
+					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+				
+				else {
+					
+					try {
+							Client c = new Client("93.88.110.173", 5000);
+							Azienda az = c.makeLoginAzienda(user, password);
+							if ( az != null ) {
+								GUIAzienda azienda = new GUIAzienda(az, init);
+								init.setVisible(false);
+								azienda.setVisible(true);
+								setVisible(false);
+							}
+							else {
+								
+								JOptionPane.showMessageDialog(null, "Errore: credenziali errate!","ERRORE LOGIN",JOptionPane.ERROR_MESSAGE);
+							}
+							c.closeConnection();
+						} catch (IOException e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+						}	
 					}
-					else {
-						JOptionPane.showMessageDialog(null, "credenziali errate");
-					}
-					c.closeConnection();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-			}
-		});
+			});
+
 	}
 }

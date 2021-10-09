@@ -101,42 +101,6 @@ public class CapemontDAO implements CapemontDAOInterface {
 
 
     }
-
-    /*
-    public ArrayList<Prodotto> getListaProdottiRecenti() {
-
-        String query = "SELECT * FROM PRODOTTI WHERE RECENTE=TRUE;" ;
-        ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>() ;
-
-        try {
-            Connection conn = DriverManager.getConnection(url,user,pwd) ;
-            Statement stm = conn.createStatement() ;
-            ResultSet rst = stm.executeQuery(query) ;
-            while (rst.next() ) {
-
-                String nome = rst.getString("nome") ;
-                String categoria = rst.getString("categoria") ;
-                int quantita = Integer.parseInt(rst.getString("QUANTITÀ"));
-                float prezzo = Float.parseFloat(rst.getString("prezzo")) ;
-                int num_acquistato = Integer.parseInt(rst.getString("num_acquistato")) ;
-                boolean recente = Boolean.parseBoolean(rst.getString("recente")) ;
-                Prodotto p = new Prodotto(nome,categoria,quantita,prezzo,num_acquistato,recente) ;
-                prodotti.add(p) ;
-
-            }
-
-            conn.close() ;
-
-        } catch( Exception e ) {
-            e.printStackTrace();
-        }
-
-        return prodotti ;
-
-    }
-
-     */
-   
     
     public ArrayList<Fornitore> getFornitori(CategoriaProdotto categoria) {
 
@@ -356,7 +320,6 @@ public class CapemontDAO implements CapemontDAOInterface {
             Connection conn = DriverManager.getConnection(url,user,pwd) ;
             CallableStatement cstmt = conn.prepareCall("{? = CALL check_prodotto(?,?)}") ;
             boolean check_all_products = true ;
-
             int quantitaTotale = 0;
             float prezzoTotale = 0;
 

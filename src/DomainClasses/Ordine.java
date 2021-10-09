@@ -64,5 +64,11 @@ public class Ordine implements Serializable {
 		this.data_emissione = data_emissione;
 	}
 
-
+	@Override
+	public String toString() {
+		String ordine = "Ordine: \n";
+		for (ProdottoOrdinato po : elenco_prodotti)
+			ordine += po.toString() + "\n";
+		return ordine;
+	}
 }

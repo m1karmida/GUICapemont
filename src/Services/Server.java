@@ -14,9 +14,10 @@ import java.io.*;
 
 public class Server implements Runnable {
 
-    Socket my_socket ;
-    Invoker inv ;
-    Server( Socket my_socket, Invoker inv) {
+    private Socket my_socket ;
+    private Invoker inv ;
+
+    public Server( Socket my_socket, Invoker inv) {
         this.my_socket = my_socket ;
         this.inv = inv ;
 
@@ -36,8 +37,6 @@ public class Server implements Runnable {
        
         while ( true ) {
             clientSocket = serverSocket.accept() ;
-            //obj_out = new ObjectOutputStream(clientSocket.getOutputStream()) ;
-            //obj_in = new ObjectInputStream(clientSocket.getInputStream()) ;
             System.out.println("Connesso, creo il Thread") ;
             new Thread(new Server(clientSocket, invoker)).start() ;
 
@@ -47,9 +46,6 @@ public class Server implements Runnable {
     public void run() {
 
         try {
-
-            System.out.println("Sono nel Thread, dormo 2 secondi e mi sveglio") ;
-            Thread.sleep(2000) ;
             ObjectOutputStream obj_out = new ObjectOutputStream(my_socket.getOutputStream()) ;
             ObjectInputStream obj_in = new ObjectInputStream(my_socket.getInputStream()) ;
             Messaggio msg_stream = (Messaggio) obj_in.readObject();

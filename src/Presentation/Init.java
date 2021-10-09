@@ -23,6 +23,7 @@ import javax.swing.*;
 
 public class Init extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private GroupLayout gl_contentPane;
 	private JFrame pointer;
 	private JPanel contentPane;
@@ -35,7 +36,6 @@ public class Init extends JFrame {
 	private JLabel lblBenvenuto;
 	private JLabel lblShowB;
 
-	private  Client client;
 
 
 	public static void main(String[] args) {
@@ -53,19 +53,16 @@ public class Init extends JFrame {
 		});
 	}
 
+
 	
 	
-	/**
-	 * Create the frame.
-	 */
 	public Init() {
+		
 		this.pointer = this;
 		setTitle("Capemont");
 		setBackground(Color.GRAY);
 
-		
-	
-/*********** codice generato per la costruzione del form *************/		
+
 		setBounds(100, 100, 427, 284);
 		contentPane = new JPanel();
 		contentPane.setBorder(null);
@@ -87,6 +84,12 @@ public class Init extends JFrame {
 		lblShowB = new JLabel("Cliccare per fare il login:");
 		
 		lblRegistra = new JLabel("Non sei ancora registrato?");
+
+		setComponents();
+	}
+
+
+	private void setComponents() {
 		
 		
 		gl_contentPane = new GroupLayout(contentPane);
@@ -140,17 +143,18 @@ public class Init extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		setLocationRelativeTo(null);
+		
 		addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				int confirm = JOptionPane.showOptionDialog(
 			             null, "Sei sicuro di chiudere l'applicazione?", 
 			             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
 			             JOptionPane.QUESTION_MESSAGE, null, null, null);
+				
 			        if (confirm == 0) {
-				       //client.closeConnection();
 			           System.exit(0);
 			        }
 				
@@ -159,23 +163,28 @@ public class Init extends JFrame {
 
 		});
 	}
-
-
+	
+	
 	
 	
 /***************** funzioni di supporto per la gestione dei pulsanti ***************************/
 	private void clickAzienda() {
+	
 		btnAzienda.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				LoginAzienda login = new LoginAzienda(pointer);
 				login.setVisible(true);
 			}
 		});
+		
 	}
 
 
 	private void clickRegistra() {
+		
 		btnRegistra.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 				String[] options = new String[2];
 				options[0] = new String("Azienda");
@@ -184,10 +193,10 @@ public class Init extends JFrame {
 																JOptionPane.INFORMATION_MESSAGE,null,options,null);
 				
 				if (confirm == 0) {
-					RegisterAzienda r  =new RegisterAzienda();
+					RegisterAzienda r  =new RegisterAzienda(pointer);
 					r.setVisible(true);
 				} else if (confirm== 1) {
-					RegisterCliente c = new RegisterCliente();
+					RegisterCliente c = new RegisterCliente(pointer);
 					c.setVisible(true);
 				}
 				

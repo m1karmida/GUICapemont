@@ -37,41 +37,56 @@ public class GUIOrdine extends JFrame {
 	private JTextArea txtCarrello;
 	private JButton btnOrdina;
 	private String data[][];
+	private String column[] = {"Codice","Nome", "Disponibilita", "Prezzo", "Fornitore", "Azienda"};
 	private ArrayList<Prodotto> listaProdotti;
 	private Ordine ordine;
+	private JScrollPane tablePane;
+	private JLabel lblProdotti;
+	private JLabel lblCarrello;
 	
-	public GUIOrdine(Persona persona) {
-		
-		ordine =  new Ordine(codice + "", Date.valueOf(LocalDate.now()), chooseAgente(), persona);
-		codice++;
+	public GUIOrdine(Persona persona, JFrame init) {
 		
 		this.persona = persona;
-		
-		setTitle("Ordine in corso");
-		setBounds(100, 100, 799, 495);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
-		String column[] = {"Codice","Nome", "Disponibilitï¿½", "Prezzo", "Fornitore", "Azienda"};
-		populateTable(column.length);
+		Agente agente = chooseAgente();
+		if (agente!= null) {
+				ordine =  new Ordine(codice + "", Date.valueOf(LocalDate.now()), agente, this.persona);
+				codice++;
+				
+				setTitle("Ordine in corso");
+				setBounds(100, 100, 799, 495);
+				contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				setContentPane(contentPane);
+				
+				populateTable(column.length);
 
-		tbProdotto = new JTable(data, column);
-		JScrollPane tablePane = new JScrollPane(tbProdotto);
-		tablePane.setSize(tbProdotto.getWidth(),tbProdotto.getHeight());
-		btnAggiungi = new JButton("Aggiungi al carrello");
-		clickAggiungi();
+				tbProdotto = new JTable(data, column);
+				tablePane = new JScrollPane(tbProdotto);
+				tablePane.setSize(tbProdotto.getWidth(),tbProdotto.getHeight());
 		
-		txtCarrello = new JTextArea();
-		
-		btnOrdina = new JButton("Effettua ordine");
-		clickEffettua();
-		
-		JLabel lblProdotti = new JLabel("Prodotti disponibili");
-		lblProdotti.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		
-		JLabel lblCarrello = new JLabel("Il tuo carrello");
-		lblCarrello.setFont(new Font("Tahoma", Font.PLAIN, 17));
+				btnAggiungi = new JButton("Aggiungi al carrello");
+				clickAggiungi();
+				
+				txtCarrello = new JTextArea();
+				
+				btnOrdina = new JButton("Effettua ordine");
+				clickEffettua();
+				
+				lblProdotti = new JLabel("Prodotti disponibili");
+				lblProdotti.setFont(new Font("Tahoma", Font.PLAIN, 17));
+				
+				lblCarrello = new JLabel("Il tuo carrello");
+				lblCarrello.setFont(new Font("Tahoma", Font.PLAIN, 17));
+				
+				setComponents();
+				setLocationRelativeTo(init);
+				setVisible(true);
+	
+		}
+		}
+
+	
+	private void setComponents() {
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -117,7 +132,6 @@ public class GUIOrdine extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-
 	
 	
 	private Agente chooseAgente() {
@@ -128,27 +142,36 @@ public class GUIOrdine extends JFrame {
 			ArrayList<Agente> agenti = client.getAgenti();
 			client.closeConnection();
 			
-			String nomiCogAgenti[] = new String[agenti.size()];
-			String emailAgenti[] = new String[agenti.size()];				
-			int i = 0;
+			if (agenti == null)
+				JOptionPane.showMessageDialog(null, "Non ci sono agenti a disposizione per l'ordine!","ERRORE AGENTI",JOptionPane.ERROR_MESSAGE);	
 			
-			for (Agente a : agenti) {
-				nomiCogAgenti[i] = a.getNome() + " " + a.getCognome() + " \t " + a.getIndirizzo();
-				emailAgenti[i++] = a.getEmail();
+			else {
+				String nomiCogAgenti[] = new String[agenti.size()];
+				String emailAgenti[] = new String[agenti.size()];				
+				int i = 0;
+				
+				for (Agente a : agenti) {
+					nomiCogAgenti[i] = a.getNome() + " " + a.getCognome() + " \t " + a.getIndirizzo();
+					emailAgenti[i++] = a.getEmail();
+				}
+				
+				JComboBox comboBox = new JComboBox(nomiCogAgenti);
+				JOptionPane.showMessageDialog(null, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
+				
+				int index = comboBox.getSelectedIndex();
+				
+				for (Agente a : agenti) {
+					if (a.getEmail().equals(emailAgenti[index]))
+						return a;
+				}
 			}
-			
-			JComboBox comboBox = new JComboBox(nomiCogAgenti);
-			JOptionPane.showMessageDialog(null, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
-			
-			int index = comboBox.getSelectedIndex();
-			
-			for (Agente a : agenti) {
-				if (a.getEmail().equals(emailAgenti[index]))
-					return a;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		}catch (ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Attenzione: devi selezionare almeno un agente di Vendita!","ERRORE SELEZIONE",JOptionPane.ERROR_MESSAGE);	
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 		}
 		
 		
@@ -164,8 +187,8 @@ public class GUIOrdine extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index =  tbProdotto.getSelectedRow();
-				int quantita = Integer.parseInt(JOptionPane.showInputDialog(null, "Hai selezionato " + data[index][1] + ". Inserisci la quantitï¿½ da ordinare :" ));
-				if (Integer.parseInt(data[index][2]) > quantita) {
+				int quantita = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Hai selezionato " + data[index][1] + ". Inserisci la quantita da ordinare :" ));
+				if (Integer.parseInt(data[index][2]) >= quantita) {
 					txtCarrello.append(data[index][1] + "\t" + quantita + "\n");
 					int quantitaRimasta = Integer.parseInt(data[index][2]) - quantita;
 					data[index][2] = quantitaRimasta + "";
@@ -178,7 +201,6 @@ public class GUIOrdine extends JFrame {
 						}
 
 					ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantita));
-					
 				} else
 					JOptionPane.showMessageDialog(null, "Errore: quantitï¿½ maggiore della disponibilitï¿½!");
 			}
@@ -194,11 +216,21 @@ public class GUIOrdine extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 				try {
 					Client client = new Client("93.88.110.173", 5000);
-					client.makeOrder(ordine);
+					System.out.println(ordine);
+					if (client.makeOrder(ordine))
+						JOptionPane.showMessageDialog(null, "Il suo ordine è andato a buon fine!","ESITO ORDINE",JOptionPane.INFORMATION_MESSAGE);
+					else
+						JOptionPane.showMessageDialog(null, "Errore: ordine non andato a buon fine. Riprovare!","ERRORE ORDINE",JOptionPane.ERROR_MESSAGE);
+					
 					client.closeConnection();
 					txtCarrello.setText("");
+					populateTable(column.length);
+
+					tablePane.remove(tbProdotto);
+					tbProdotto  = new JTable(data,column);
+					tablePane.add(tbProdotto);
 				} catch (IOException ex) {
-					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 					ex.printStackTrace();
 				}
 				}
@@ -207,6 +239,7 @@ public class GUIOrdine extends JFrame {
 			
 
 	}
+	
 	
 	private void populateTable(int columns) {
 
@@ -225,10 +258,10 @@ public class GUIOrdine extends JFrame {
 				data[i][4] = p.getFornitore().getNome();
 				data[i++][5] = p.getA().getNome();
 			}
-			
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 		}
 
 	}

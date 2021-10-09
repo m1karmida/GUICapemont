@@ -29,12 +29,13 @@ public class GUIAzienda extends JFrame {
 	private JButton btnInserisci;
 	private JButton btnVisualizza; 
 	private JFrame init;
+	private GroupLayout gl_contentPane;
 	
 	public GUIAzienda(Azienda azienda, JFrame init) {
 		
 		this.init = init;
 		this.azienda = azienda;
-		setTitle("Portale Presentation.Azienda: " + this.azienda.getNome());
+		setTitle("Portale Azienda: " + this.azienda.getNome());
 		this.setBounds(100, 100, 374, 252);
 		this.contentPane = new JPanel();
 		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -45,7 +46,14 @@ public class GUIAzienda extends JFrame {
 		btnVisualizza = new JButton("Visualizza Catalogo");
 		clickVisualizza();
 		
-		GroupLayout gl_contentPane = new GroupLayout(this.contentPane);
+		setComponents();
+	
+	}
+	
+	
+	private void setComponents() {
+		
+		gl_contentPane = new GroupLayout(this.contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -78,7 +86,7 @@ public class GUIAzienda extends JFrame {
 
 		});
 		
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(init);
 	}
 	
 	
@@ -87,17 +95,20 @@ public class GUIAzienda extends JFrame {
 	/******************* funzioni di supporto **********************************/
 	
 	private void clickInserisci() {
+		
 		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GUIinsertProdotto insert = null;
-					insert = new GUIinsertProdotto(azienda);
+				
+				GUIinsertProdotto insert = new GUIinsertProdotto(azienda,init);
 					insert.setVisible(true);
 			}
 		});
+		
 	}
 	
 	
 	private void clickVisualizza() {
+		
 		btnVisualizza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -105,30 +116,34 @@ public class GUIAzienda extends JFrame {
 					Client c = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
 					
-					String column[] = {"Nome","Categoria","Quantit�", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
-					String data[][] = new String[listaProdotti.size()][column.length];
-					int i = 0;
+					if (listaProdotti == null)
+						
+						JOptionPane.showMessageDialog(null, "Non ci sono prodotti disponibili per l'azienda selezionata!","ERRORE AZIENDA",JOptionPane.WARNING_MESSAGE);
 					
-					for (Prodotto p : listaProdotti){
-						data[i][0] = p.getNome();
-						data[i][1] = p.getCategoria().toString();
-						data[i][2] = p.getQuantita() + "";
-						data[i][3] = p.getPrezzo() + "";
-						data[i][4] = p.getFornitore().getNome();
-						data[i][5] = p.getFornitore().getIndirizzo();
-						i++;
-					}
-					
-					JTable table = new JTable(data, column);
-					JScrollPane tablePane = new JScrollPane(table);
-					tablePane.setSize(table.getWidth(),table.getHeight());
-					JOptionPane.showMessageDialog(null, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+					else { 
+							String column[] = {"Nome","Categoria","Quantita", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
+							String data[][] = new String[listaProdotti.size()][column.length];
+							int i = 0;
+							
+							for (Prodotto p : listaProdotti){
+								data[i][0] = p.getNome();
+								data[i][1] = p.getCategoria().toString();
+								data[i][2] = p.getQuantita() + "";
+								data[i][3] = p.getPrezzo() + "";
+								data[i][4] = p.getFornitore().getNome();
+								data[i][5] = p.getFornitore().getIndirizzo();
+								i++;
+							}
+							
+							JTable table = new JTable(data, column);
+							JScrollPane tablePane = new JScrollPane(table);
+							tablePane.setSize(table.getWidth(),table.getHeight());
+							JOptionPane.showMessageDialog(null, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
+						}
+						} catch (IOException e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+						}
 			}
 		});
 	}

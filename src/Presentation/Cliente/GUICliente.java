@@ -20,6 +20,7 @@ public class GUICliente extends JFrame {
 	private JButton btnVisualizza;
 	private JButton btnOrdine;
 	private JFrame init;
+	private GroupLayout gl_contentPane;
 
 	public GUICliente(Persona cliente, JFrame init) {
 		
@@ -38,7 +39,12 @@ public class GUICliente extends JFrame {
 		btnOrdine = new JButton("Effettua ordine");
 		clickOrdine();
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		setComponents();
+		
+	}
+
+	private void setComponents() {
+		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -71,9 +77,8 @@ public class GUICliente extends JFrame {
 
 		});
 		
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(init);
 	}
-
 	
 	private void clickVisualizza() {
 		
@@ -90,19 +95,11 @@ public class GUICliente extends JFrame {
 	
 		btnOrdine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GUIOrdine ordine = new GUIOrdine(cliente);
-				ordine.setVisible(true);
+				GUIOrdine ordine = new GUIOrdine(cliente,init);
 			}
 		});
 	
 	}
-	
-	
-	public Persona getCliente() {
-		return cliente;
-	}
 
-	public void setCliente(Persona cliente) {
-		this.cliente = cliente;
-	}
+	
 }

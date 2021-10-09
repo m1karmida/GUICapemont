@@ -28,9 +28,13 @@ public class LoginCliente extends JFrame {
 	private JLabel lblPassword;
 	private JButton btnLogin;
 	private JFrame init;
+	private GroupLayout gl_contentPane;
+	
 	
 	public LoginCliente(JFrame init) {
+		
 		this.init = init;
+		setTitle("Login Cliente");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -50,8 +54,13 @@ public class LoginCliente extends JFrame {
 		btnLogin = new JButton("Login");
 		clickLogin();
 		
+		setComponents();
 		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+	}
+	
+	
+	private void setComponents() {
+		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
@@ -85,14 +94,24 @@ public class LoginCliente extends JFrame {
 					.addGap(47))
 		);
 		contentPane.setLayout(gl_contentPane);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(init);
 	}
 	
+	
 	private void clickLogin() {
+		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String user = txtUser.getText();
 				String pwd = new String(txtPwd.getPassword());
+				txtUser.setText("");
+				txtPwd.setText("");
+				
+				if (user.equals("") || pwd.equals(""))
+					
+					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+				
+				else {
 				try {
 					Client c = new Client("93.88.110.173", 5000);
 					Persona p = c.makeLoginUtente(user,pwd);
@@ -102,15 +121,18 @@ public class LoginCliente extends JFrame {
 						setVisible(false);
 						init.setVisible(false);
 					}
-					else {
-						JOptionPane.showMessageDialog(null, "credenziali errate");
+					else {	
+						JOptionPane.showMessageDialog(null, "Errore: credenziali non corrette!","ERRORE CREDENZIALI",JOptionPane.ERROR_MESSAGE);
+					
 					}
 					c.closeConnection();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e.printStackTrace();	
+					JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+					
 				}
 				
+				}
 			}
 		});
 	}

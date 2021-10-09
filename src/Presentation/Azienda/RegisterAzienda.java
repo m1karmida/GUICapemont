@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class RegisterAzienda extends JFrame {
+
 	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private GroupLayout gl_contentPane;
 	
@@ -41,10 +43,10 @@ public class RegisterAzienda extends JFrame {
 
 	
 	
-	public RegisterAzienda() {
+	public RegisterAzienda(JFrame frame) {
 		
 		setTitle("Registrazione Presentation.Azienda");
-		setBounds(100, 100, 332, 321);
+		setBounds(100, 100, 369, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -81,6 +83,9 @@ public class RegisterAzienda extends JFrame {
 		clickRegistra();
 		
 		SetComponents();
+		
+
+		setLocationRelativeTo(frame);
 		
 	}
 	
@@ -154,38 +159,47 @@ public class RegisterAzienda extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
-		setLocationRelativeTo(null);
 	}
+	
 	
 	
 	private void clickRegistra() {
 
 		
 		btnRegistra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (txtPassword.getText().equals(txtRPassword.getText())){
-					Client c;
+			public void actionPerformed(ActionEvent arg0) {	
+				
+				if (!checkAllTxt())
+					
+					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+				
+				else if (!(txtPassword.getText().equals(txtRPassword.getText())))
+					
+					JOptionPane.showMessageDialog(null, "Errore: Password non corrispondente nei due campi!","ERRORE PASSWORD",JOptionPane.ERROR_MESSAGE);
+				
+				else{
 					try {
-						c = new Client("93.88.110.173", 5000);
-						Azienda az = new Azienda(txtIndirizzo.getText(), txtEmail.getText(), txtPassword.getText(),
-								txtNome.getText(),txtPIVA.getText());
+						Client c = new Client("93.88.110.173", 5000);
+					{ 
+							
+							Azienda az = new Azienda(txtIndirizzo.getText(), txtEmail.getText(), txtPassword.getText(),
+									txtNome.getText(),txtPIVA.getText());
+							clearTXTs();
+							
+							if (c.makeRegisterAzienda(az)) {
 						
-						//TODO : implementare i controlli sulle txt
+								JOptionPane.showMessageDialog(null, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
+								setVisible(false);
+							}
+							else 
+								JOptionPane.showMessageDialog(null, "Errore imprevisto: Riprovare");
+							}
 						
-						if (c.makeRegisterAzienda(az)) {
-						JOptionPane.showMessageDialog(null, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
-						
-						setVisible(false);
-						}
-						else 
-							JOptionPane.showMessageDialog(null, "Errore imprevisto: Riprovare");
-						clearTXTs();
 						c.closeConnection();
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-						
+						JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);				
 					}
 					
 				}
@@ -195,7 +209,8 @@ public class RegisterAzienda extends JFrame {
 		});
 	}
 	
-	public void clearTXTs() {
+	
+	private void clearTXTs() {
 		
 		txtNome.setText("");
 		txtPassword.setText("");
@@ -203,6 +218,30 @@ public class RegisterAzienda extends JFrame {
 		txtEmail.setText("");
 		txtIndirizzo.setText("");
 		txtPIVA.setText("");
+		
+	}
+	
+	private boolean checkAllTxt() {
+		
+		if (txtNome.getText().equals(""))
+			return false;
+		
+		if (txtEmail.getText().equals(""))
+			return false;
+		
+		if (txtIndirizzo.getText().equals(""))
+			return false;
+		
+		if (txtPIVA.getText().equals(""))
+			return false;
+		
+		if (txtPassword.getText().equals(""))
+			return false;
+		
+		if (txtRPassword.getText().equals(""))
+			return false;
+		
+		return true;
 		
 	}
 }
