@@ -8,11 +8,27 @@ import java.util.ArrayList;
 
 public class CapemontDAO implements CapemontDAOInterface {
 
-    private final String url = "jdbc:postgresql://localhost/capemont_db" ; //Parametri da se
-    private final String user = "postgres" ;
-    private final String pwd = "6454" ;
+    private static CapemontDAO instance = null;
+    private final String url;
+    private final String user ;
+    private final String pwd;
 
-    public Persona makeLogin(String email, String password) {
+
+    private CapemontDAO (){
+        url = "jdbc:postgresql://localhost/capemont_db" ; //Parametri da se
+        user = "postgres" ;
+        pwd = "6454" ;
+    }
+
+    public static CapemontDAO getInstance(){
+
+        if (instance == null)
+            instance = new CapemontDAO();
+
+        return instance;
+    }
+
+     public Persona makeLogin(String email, String password) {
 
         String query = "SELECT * FROM PERSONE WHERE EMAIL='" + email + "' AND PASSWORD='" + password + "' ;" ;
         Persona p = null;

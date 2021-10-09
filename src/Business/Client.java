@@ -1,7 +1,9 @@
 package Business;
 
 import DomainClasses.*;
+import Services.Command.Commands;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -48,12 +50,12 @@ public class Client {
     
     public boolean makeRegisterAzienda(Azienda a) {
         System.out.println("REGISTERAZIENDA "+a.getEmail()+" "+a.getPassword()) ;
-        Messaggio m = new Messaggio("REGISTERAZIENDA",a) ;
+        Messaggio m = new Messaggio(Commands.REGISTERAZIENDA,a) ;
 
         try {
 
             obj_out.writeObject(m);
-            return Boolean.parseBoolean(in.readLine());
+            return (Boolean)obj_in.readObject();
 
         } catch( Exception e ) {
             e.printStackTrace();
@@ -65,7 +67,7 @@ public class Client {
 
     public Azienda makeLoginAzienda( String email, String password ) {
 
-        Messaggio m = new Messaggio("LOGINAZIENDA", new Azienda(email, password)) ;
+        Messaggio m = new Messaggio(Commands.LOGINAZIENDA, new Azienda(email, password)) ;
         System.out.println("LOGINAZIENDA "+ email +" "+ password) ;
         Azienda az = null;
         
@@ -82,31 +84,25 @@ public class Client {
     
     public boolean inserisciProdotto(Prodotto p) {
 
-        Messaggio m = new Messaggio("INSERISCIPRODOTTO",p) ;
-
-        //System.out.println("INSERISCIPRODOTTO "+p.getNome()+" "+p.getCategoria()+" "+p.getQuantita()+" "+p.getPrezzo()+" "+p.getNum_acquistato()+" "+p.isRecente()) ;
-        //out.println("INSERISCIPRODOTTO "+p.getNome()+" "+p.getCategoria()+" "+p.getQuantita()+" "+p.getPrezzo()+" "+p.getNum_acquistato()+" "+p.isRecente()) ;
+        Messaggio m = new Messaggio(Commands.INSERISCIPRODOTTO,p) ;
         try {
 
-            obj_out.writeObject(m) ;
-            String ret = in.readLine() ;
-            System.out.println(ret) ;
-            if (ret.equals("PRODOTTO INSERITO"))
-            	return true;
+            obj_out.writeObject(m);
+            return (Boolean)obj_in.readObject();
+
         } catch( Exception e ) {
 
             e.printStackTrace();
 
         }
-        
-        return false;
 
+        return false;
     }
     
     
     public ArrayList<Prodotto> getListaProdottidiAzienda(Azienda a) {
 
-        Messaggio m = new Messaggio("GETLISTAPRODOTTIAZIENDA",a) ;
+        Messaggio m = new Messaggio(Commands.GETLISTAPRODOTTIAZIENDA,a) ;
         System.out.println("GETLISTAPRODOTTIAZIENDA") ;
 
         ArrayList<Prodotto> prod = new ArrayList<Prodotto>() ;
@@ -114,6 +110,7 @@ public class Client {
         try {
             obj_out.writeObject(m);
             prod = (ArrayList<Prodotto>) obj_in.readObject() ;
+
             for ( Prodotto p : prod ) {
                 System.out.println(p.toString()) ;
             }
@@ -125,9 +122,9 @@ public class Client {
     }
     
     public ArrayList<Fornitore> getFornitori (CategoriaProdotto categoria){
-    	 Messaggio m = new Messaggio("GETFORNITORI",new CategoriaProdottoWrapper(categoria)) ;
-         System.out.println("GETFORNITORI: " + categoria) ;
+    	 Messaggio m = new Messaggio(Commands.GETFORNITORI,new CategoriaProdottoWrapper(categoria)) ;
 
+         System.out.println("GETFORNITORI: " + categoria) ;
          ArrayList<Fornitore> fornitori = new ArrayList<Fornitore>() ;
 
          try {
@@ -153,12 +150,13 @@ public class Client {
 
     public boolean makeRegisterUtente( Persona p) {
         System.out.println("REGISTERUTENTE "+p.getEmail()+" "+p.getPassword()) ;
-        Messaggio m = new Messaggio("REGISTERUTENTE",p) ;
+        Messaggio m = new Messaggio(Commands.REGISTERUTENTE,p) ;
 
         try {
 
             obj_out.writeObject(m);
-            return Boolean.parseBoolean(in.readLine());
+            return (Boolean) obj_in.readObject();
+
         } catch( Exception e ) {
             e.printStackTrace();
         }
@@ -169,7 +167,7 @@ public class Client {
     
     public Persona makeLoginUtente( String email, String password ) {
 
-        Messaggio m = new Messaggio("LOGINUTENTE",new Persona(email, password)) ;
+        Messaggio m = new Messaggio(Commands.LOGINUTENTE,new Persona(email, password)) ;
         System.out.println("LOGINUTENTE "+ email +" "+ password) ;
         Persona p = null;
         try {
@@ -185,13 +183,13 @@ public class Client {
 
     
     public boolean makeOrder( Ordine o ) {
-        Messaggio m = new Messaggio("EFFETTUAORDINE",o) ;
+        Messaggio m = new Messaggio(Commands.EFFETTUAORDINE,o) ;
 
          try {
 
              obj_out.writeObject(m);
-             String ret = in.readLine() ;
-             System.out.println(ret) ;
+             return (Boolean) obj_in.readObject();
+
          } catch (Exception e) {
              e.printStackTrace();
          }
@@ -205,7 +203,7 @@ public class Client {
     public ArrayList<Prodotto> getListaProdotti() {
 
         Azienda a = new Azienda() ; 
-        Messaggio m = new Messaggio("GETLISTAPRODOTTI",null) ;
+        Messaggio m = new Messaggio(Commands.GETLISTAPRODOTTI,null) ;
         System.out.println("GETLISTAPRODOTTI ") ;
 
         ArrayList<Prodotto> prod = new ArrayList<Prodotto>() ;
@@ -226,7 +224,7 @@ public class Client {
     
     
     public ArrayList<Agente> getAgenti (){
-   	 Messaggio m = new Messaggio("GETAGENTI",null) ;
+   	 Messaggio m = new Messaggio(Commands.GETAGENTI,null) ;
         System.out.println("GETAGENTI ") ;
 
         ArrayList<Agente> agenti = new ArrayList<>() ;
