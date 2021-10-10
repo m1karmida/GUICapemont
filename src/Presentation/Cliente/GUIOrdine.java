@@ -170,13 +170,13 @@ public class GUIOrdine extends JFrame {
 				}
 				
 				JComboBox comboBox = new JComboBox(nomiCogAgenti);
-				JOptionPane.showMessageDialog(init, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
-				
+				JOptionPane.showMessageDialog(init, comboBox,"Selezione agente di vendita" ,JOptionPane.QUESTION_MESSAGE);
 				int index = comboBox.getSelectedIndex();
 				
 				for (Agente a : agenti) {
-					if (a.getEmail().equals(emailAgenti[index]))
+					if (a.getEmail().equals(emailAgenti[index])) {
 						return a;
+					}
 				}
 			}
 		}catch (ArrayIndexOutOfBoundsException e) {

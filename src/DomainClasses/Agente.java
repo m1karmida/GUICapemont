@@ -83,6 +83,11 @@ public class Agente implements Serializable {
 		this.ruolo = ruolo;
 	}
 
+	@Override
+	public String toString() {
+		return this.nome + " " + this.cognome;
+	}
+
 	public String getEmail() {
 		return email;
 	}
