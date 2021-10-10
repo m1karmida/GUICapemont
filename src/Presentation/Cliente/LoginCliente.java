@@ -36,7 +36,7 @@ public class LoginCliente extends JFrame {
 		this.init = init;
 		setTitle("Login Cliente");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 360, 222);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,8 +62,8 @@ public class LoginCliente extends JFrame {
 	private void setComponents() {
 		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(45)
@@ -71,17 +71,17 @@ public class LoginCliente extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(59)
 							.addComponent(lblUser)))
-					.addPreferredGap(ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(btnLogin)
-						.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtPwd, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
-					.addGap(54))
+						.addComponent(txtUser)
+						.addComponent(txtPwd))
+					.addGap(108))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(71, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(69, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblUser))
@@ -102,14 +102,14 @@ public class LoginCliente extends JFrame {
 		
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String user = txtUser.getText();
+				String user = txtUser.getText().toLowerCase();
 				String pwd = new String(txtPwd.getPassword());
 				txtUser.setText("");
 				txtPwd.setText("");
 				
 				if (user.equals("") || pwd.equals(""))
 					
-					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
 				
 				else {
 				try {
@@ -122,13 +122,13 @@ public class LoginCliente extends JFrame {
 						init.setVisible(false);
 					}
 					else {	
-						JOptionPane.showMessageDialog(null, "Errore: credenziali non corrette!","ERRORE CREDENZIALI",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, "Errore: credenziali non corrette!","ERRORE CREDENZIALI",JOptionPane.ERROR_MESSAGE);
 					
 					}
 					c.closeConnection();
 				} catch (IOException e) {
 					e.printStackTrace();	
-					JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: Connessione non riuscita con il server","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 					
 				}
 				

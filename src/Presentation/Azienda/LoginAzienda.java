@@ -102,7 +102,7 @@ public class LoginAzienda extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				String user = txtUser.getText();
+				String user = txtUser.getText().toLowerCase();
 				String password = new String(txtPwd.getPassword());	
 
 				txtUser.setText("");
@@ -110,7 +110,7 @@ public class LoginAzienda extends JFrame {
 				
 				if (user.equals("") || password.equals(""))
 					
-					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
 				
 				else {
 					
@@ -125,12 +125,12 @@ public class LoginAzienda extends JFrame {
 							}
 							else {
 								
-								JOptionPane.showMessageDialog(null, "Errore: credenziali errate!","ERRORE LOGIN",JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(rootPane, "Errore: credenziali errate!","ERRORE LOGIN",JOptionPane.ERROR_MESSAGE);
 							}
 							c.closeConnection();
 						} catch (IOException e) {
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 						}	
 					}
 				}

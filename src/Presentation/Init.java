@@ -57,6 +57,7 @@ public class Init extends JFrame {
 	
 	
 	public Init() {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		this.pointer = this;
 		setTitle("Capemont");
@@ -156,7 +157,8 @@ public class Init extends JFrame {
 				
 			        if (confirm == 0) {
 			           System.exit(0);
-			        }
+			        } else
+			        	setVisible(true);
 				
 			}
 
@@ -189,7 +191,7 @@ public class Init extends JFrame {
 				String[] options = new String[2];
 				options[0] = new String("Azienda");
 				options[1] = new String("Cliente");
-				int confirm = JOptionPane.showOptionDialog(null,"Scegli il profilo da registrare: ",null, 0 ,
+				int confirm = JOptionPane.showOptionDialog(rootPane,"Scegli il profilo da registrare: ",null, 0 ,
 																JOptionPane.INFORMATION_MESSAGE,null,options,null);
 				
 				if (confirm == 0) {

@@ -102,6 +102,7 @@ public class CapemontDAO implements CapemontDAOInterface {
 
     }
     
+    
     public ArrayList<Fornitore> getFornitori(CategoriaProdotto categoria) {
 
         String query = "SELECT * FROM FORNITORI WHERE tipologia ='" + categoria + "' ;" ;
@@ -166,6 +167,37 @@ public class CapemontDAO implements CapemontDAOInterface {
         }
 
         return agenti ;
+    }
+    
+    
+    public ArrayList<Azienda> getAziende() {
+
+        String query = "SELECT * FROM Aziende;" ;
+        ArrayList<Azienda> aziende = new ArrayList<>() ;
+
+        try {
+            Connection conn = DriverManager.getConnection(url,user,pwd) ;
+            Statement stm = conn.createStatement() ;
+            ResultSet rst = stm.executeQuery(query) ;
+            while (rst.next() ) {
+
+                String pIVA = rst.getString("piva") ;
+                String nome = rst.getString("nome") ;
+                String indirizzo = rst.getString("indirizzo");
+                String email = rst.getString("email");
+
+                Azienda azienda = new Azienda(indirizzo, email, "", nome, pIVA);
+                aziende.add(azienda);
+                
+            }
+
+            conn.close() ;
+
+        } catch( Exception e ) {
+            e.printStackTrace();
+        }
+
+        return aziende ;
     }
     
     

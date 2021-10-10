@@ -139,12 +139,12 @@ public class GUIinsertProdotto extends JFrame {
 				
 				if (cmbCategoria.getSelectedItem() == null)
 					
-					JOptionPane.showMessageDialog(null, "Errore: non hai selezionato alcuna categoria!","ERRORE CATEGORIA",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: non hai selezionato alcuna categoria!","ERRORE CATEGORIA",JOptionPane.ERROR_MESSAGE);
 					
 				else if (!checkTxt())
 					
 
-					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti o presente un valore non corretto!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: uno dei campi mancanti o presente un valore non corretto!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 				
 				else {
 						try {
@@ -163,7 +163,7 @@ public class GUIinsertProdotto extends JFrame {
 							
 							if (fornitori == null)
 		
-									JOptionPane.showMessageDialog(null, "Errore: Non ci sono fornitori disponibili per la categoria selezionata, si prega di inserirne almeno uno o di cambiare categoria",
+									JOptionPane.showMessageDialog(rootPane, "Errore: Non ci sono fornitori disponibili per la categoria selezionata, si prega di inserirne almeno uno o di cambiare categoria",
 																			"ERRORE FORNITORI",JOptionPane.ERROR_MESSAGE);
 							
 							else {
@@ -178,7 +178,7 @@ public class GUIinsertProdotto extends JFrame {
 									}
 									
 									JComboBox comboBox = new JComboBox(nomiFornitori);
-									JOptionPane.showMessageDialog(null, comboBox, "Selezione Fornitore",JOptionPane.QUESTION_MESSAGE);
+									JOptionPane.showMessageDialog(rootPane, comboBox, "Selezione Fornitore",JOptionPane.QUESTION_MESSAGE);
 									
 									int index = comboBox.getSelectedIndex();
 									Fornitore fornitore = null;
@@ -198,22 +198,22 @@ public class GUIinsertProdotto extends JFrame {
 									else 
 										message = "Errore nell'inserimento del prodotto: Riprovare";
 									client.closeConnection();
-									JOptionPane.showMessageDialog(null, message);
+									JOptionPane.showMessageDialog(rootPane, message);
 									
 								}
 							} catch(NumberFormatException | NullPointerException ex) {
 								ex.printStackTrace();
-								JOptionPane.showMessageDialog(null, "Errore: Formato errato di almeno uno dei campi numerici!","ERRORE FORMATO",JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(rootPane, "Errore: Formato errato di almeno uno dei campi numerici!","ERRORE FORMATO",JOptionPane.ERROR_MESSAGE);
 								
 								}
 							catch(ArrayIndexOutOfBoundsException ex) {
 								ex.printStackTrace();
-								JOptionPane.showMessageDialog(null, "Errore: Non hai selezionato alcun fornitore!","ERRORE FORNITORE",JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(rootPane, "Errore: Non hai selezionato alcun fornitore!","ERRORE FORNITORE",JOptionPane.ERROR_MESSAGE);
 							
 							}
 							catch (IOException e1) {
 								e1.printStackTrace();
-								JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(rootPane, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 						}
 				}
 						

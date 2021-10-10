@@ -45,7 +45,7 @@ public class RegisterAzienda extends JFrame {
 	
 	public RegisterAzienda(JFrame frame) {
 		
-		setTitle("Registrazione Presentation.Azienda");
+		setTitle("Registrazione Azienda");
 		setBounds(100, 100, 369, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -171,35 +171,35 @@ public class RegisterAzienda extends JFrame {
 				
 				if (!checkAllTxt())
 					
-					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
 				
 				else if (!(txtPassword.getText().equals(txtRPassword.getText())))
 					
-					JOptionPane.showMessageDialog(null, "Errore: Password non corrispondente nei due campi!","ERRORE PASSWORD",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: Password non corrispondente nei due campi!","ERRORE PASSWORD",JOptionPane.ERROR_MESSAGE);
 				
 				else{
 					try {
 						Client c = new Client("93.88.110.173", 5000);
 					{ 
 							
-							Azienda az = new Azienda(txtIndirizzo.getText(), txtEmail.getText(), txtPassword.getText(),
+							Azienda az = new Azienda(txtIndirizzo.getText(), txtEmail.getText().toLowerCase(), txtPassword.getText(),
 									txtNome.getText(),txtPIVA.getText());
 							clearTXTs();
 							
 							if (c.makeRegisterAzienda(az)) {
 						
-								JOptionPane.showMessageDialog(null, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
+								JOptionPane.showMessageDialog(rootPane, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
 								setVisible(false);
 							}
 							else 
-								JOptionPane.showMessageDialog(null, "Errore imprevisto: Riprovare");
+								JOptionPane.showMessageDialog(rootPane, "Errore imprevisto: Riprovare");
 							}
 						
 						c.closeConnection();
 						
 					} catch (IOException e) {
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);				
+						JOptionPane.showMessageDialog(rootPane, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);				
 					}
 					
 				}

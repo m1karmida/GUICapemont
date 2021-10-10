@@ -59,11 +59,10 @@ public class GUIOrdine extends JFrame {
 				setContentPane(contentPane);
 				
 				populateTable(column.length);
-
 				tbProdotto = new JTable(data, column);
 				tablePane = new JScrollPane(tbProdotto);
 				tablePane.setSize(tbProdotto.getWidth(),tbProdotto.getHeight());
-		
+
 				btnAggiungi = new JButton("Aggiungi al carrello");
 				clickAggiungi();
 				
@@ -143,7 +142,7 @@ public class GUIOrdine extends JFrame {
 			client.closeConnection();
 			
 			if (agenti == null)
-				JOptionPane.showMessageDialog(null, "Non ci sono agenti a disposizione per l'ordine!","ERRORE AGENTI",JOptionPane.ERROR_MESSAGE);	
+				JOptionPane.showMessageDialog(rootPane, "Non ci sono agenti a disposizione per l'ordine!","ERRORE AGENTI",JOptionPane.ERROR_MESSAGE);	
 			
 			else {
 				String nomiCogAgenti[] = new String[agenti.size()];
@@ -156,7 +155,7 @@ public class GUIOrdine extends JFrame {
 				}
 				
 				JComboBox comboBox = new JComboBox(nomiCogAgenti);
-				JOptionPane.showMessageDialog(null, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
+				JOptionPane.showMessageDialog(rootPane, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
 				
 				int index = comboBox.getSelectedIndex();
 				
@@ -167,11 +166,11 @@ public class GUIOrdine extends JFrame {
 			}
 		}catch (ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Attenzione: devi selezionare almeno un agente di Vendita!","ERRORE SELEZIONE",JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(rootPane, "Attenzione: devi selezionare almeno un agente di Vendita!","ERRORE SELEZIONE",JOptionPane.ERROR_MESSAGE);	
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(rootPane, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 		}
 		
 		
@@ -225,10 +224,7 @@ public class GUIOrdine extends JFrame {
 					client.closeConnection();
 					txtCarrello.setText("");
 					populateTable(column.length);
-
-					tablePane.remove(tbProdotto);
-					tbProdotto  = new JTable(data,column);
-					tablePane.add(tbProdotto);
+					
 				} catch (IOException ex) {
 					JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 					ex.printStackTrace();
@@ -250,14 +246,19 @@ public class GUIOrdine extends JFrame {
 			
 			int i = 0;
 			
-			for (Prodotto p : listaProdotti){
-				data[i][0] = p.getCodice_prodotto();
-				data[i][1] = p.getNome();
-				data[i][2] = p.getQuantita() + "";
-				data[i][3] = p.getPrezzo() + "";
-				data[i][4] = p.getFornitore().getNome();
-				data[i++][5] = p.getA().getNome();
+			for (Prodotto p : listaProdotti) {
+				if (p.getQuantita() > 0) {
+					data[i][0] = p.getCodice_prodotto();
+					data[i][1] = p.getNome();
+					data[i][2] = p.getQuantita() + "";
+					data[i][3] = p.getPrezzo() + "";
+					data[i][4] = p.getFornitore().getNome();
+					data[i++][5] = p.getA().getNome();
+				}
 			}
+
+
+
 
 		} catch (IOException e) {
 			e.printStackTrace();

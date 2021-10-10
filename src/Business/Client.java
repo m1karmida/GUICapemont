@@ -242,6 +242,23 @@ public class Client {
         return agenti ;
    }
     
+    public ArrayList<Azienda> getAziende (){
+      	 Messaggio m = new Messaggio(Commands.GETAZIENDE,null) ;
+           System.out.println("GETAZIENDE ") ;
+
+           ArrayList<Azienda> aziende = new ArrayList<>() ;
+
+           try {
+               obj_out.writeObject(m);
+               aziende = (ArrayList<Azienda>) obj_in.readObject() ;
+               
+           } catch ( Exception e ) {
+               e.printStackTrace();
+           }
+
+           return aziende ;
+      }
+    
    /*******************************************************************************/ 
 
   

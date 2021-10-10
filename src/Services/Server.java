@@ -69,6 +69,7 @@ public class Server implements Runnable {
         register.addCommand(Commands.INSERISCIPRODOTTO, new InsertProdottoCommandExecutor());
         register.addCommand(Commands.LOGINAZIENDA, new LoginAziendaCommandExecutor());
         register.addCommand(Commands.LOGINUTENTE, new LoginUtenteCommandExecutor());
+        register.addCommand(Commands.GETAZIENDE, new GetAziendaCommandExecutor());
 
         return new Invoker(register);
     }

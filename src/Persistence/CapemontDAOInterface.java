@@ -16,6 +16,6 @@ public interface CapemontDAOInterface {
     public boolean makeRegister(Persona p) ;
     public boolean makeRegisterAzienda( Azienda a ) ;
     public boolean makeOrder( Ordine o ) ;
-
+    public ArrayList<Azienda> getAziende();
 
 }

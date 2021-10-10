@@ -118,7 +118,7 @@ public class GUIAzienda extends JFrame {
 					
 					if (listaProdotti == null)
 						
-						JOptionPane.showMessageDialog(null, "Non ci sono prodotti disponibili per l'azienda selezionata!","ERRORE AZIENDA",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(rootPane, "Non ci sono prodotti disponibili per l'azienda selezionata!","ERRORE AZIENDA",JOptionPane.WARNING_MESSAGE);
 					
 					else { 
 							String column[] = {"Nome","Categoria","Quantita", "Prezzo", "Nome fornitore", "indirizzo fornitore"};
@@ -138,11 +138,11 @@ public class GUIAzienda extends JFrame {
 							JTable table = new JTable(data, column);
 							JScrollPane tablePane = new JScrollPane(table);
 							tablePane.setSize(table.getWidth(),table.getHeight());
-							JOptionPane.showMessageDialog(null, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
 						}
 						} catch (IOException e) {
 							e.printStackTrace();
-							JOptionPane.showMessageDialog(null, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(rootPane, "Errore: Connessione non riuscita con il server!","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 						}
 			}
 		});

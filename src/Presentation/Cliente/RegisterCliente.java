@@ -46,8 +46,8 @@ public class RegisterCliente extends JFrame {
 	public RegisterCliente(JFrame frame) {
 		
 		this.pointer = this;
-		setTitle("Registrazione Presentation.Cliente");
-		setBounds(100, 100, 356, 321);
+		setTitle("Registrazione Cliente");
+		setBounds(100, 100, 388, 321);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -170,34 +170,34 @@ public class RegisterCliente extends JFrame {
 				
 				if (!checkAllTxt())
 					
-					JOptionPane.showMessageDialog(null, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: uno dei campi mancanti!","ERRORE REGISTRAZIONE",JOptionPane.ERROR_MESSAGE);
 				
 				else if (!(txtPassword.getText().equals(txtRPassword.getText())))
 					
-					JOptionPane.showMessageDialog(null, "Errore: Password non corrispondente nei due campi!","ERRORE PASSWORD",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(rootPane, "Errore: Password non corrispondente nei due campi!","ERRORE PASSWORD",JOptionPane.ERROR_MESSAGE);
 				
 				else {
 					try {
 						Client c = new Client("93.88.110.173", 5000);
 						
 						
-						Persona persona = new Persona(txtIndirizzo.getText(),txtEmail.getText(),txtPassword.getText(),
+						Persona persona = new Persona(txtIndirizzo.getText(),txtEmail.getText().toLowerCase(),txtPassword.getText(),
 																			txtNome.getText() , txtCognome.getText());
 						
 						if (c.makeRegisterUtente(persona)) {
-						JOptionPane.showMessageDialog(null, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
+						JOptionPane.showMessageDialog(rootPane, "Registrazione Avvenuta con successo: ora puoi effettuare il login");
 						
 						setVisible(false);
 						}
 						else 
-							JOptionPane.showMessageDialog(null, "Errore imprevisto: Riprovare");
+							JOptionPane.showMessageDialog(rootPane, "Errore imprevisto: Riprovare");
 						clearTXTs();
 						c.closeConnection();
 						
 					} catch (IOException e) {
 
 						e.printStackTrace();
-						JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
+						JOptionPane.showMessageDialog(rootPane, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
 						
 					}
 					

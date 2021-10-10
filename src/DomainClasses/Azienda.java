@@ -18,12 +18,14 @@ public class Azienda extends Utente implements Serializable {
 	public Azienda(String email, String password) {
 		super(email,password) ;
 	}
+	
 	public Azienda(String indirizzo, String email, String password, String nome, String P_IVA) {
 		super(indirizzo, password, email, nome);
 		this.P_IVA = P_IVA;
 		this.prodotti_propri = new ArrayList<Prodotto>() ;
 
 	}
+	
 	public Azienda(String indirizzo, String email, String password, String nome, String P_IVA,
 				   ArrayList prodotti_propri) {
 		super(indirizzo, password, email, nome);
