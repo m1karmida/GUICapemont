@@ -29,14 +29,32 @@ public class Ordine implements Serializable {
 		this.persona = persona;
 	}
 
-	public void addElenco_prodotti(ProdottoOrdinato prodotto) {
+	public void  addElenco_prodotti(ProdottoOrdinato prodotto) {
 		this.elenco_prodotti.add(prodotto);
+	}
+	
+	
+	public boolean removeElenco_prodotti(String codice) {
+		int index = 0;
+		for (ProdottoOrdinato po : elenco_prodotti) {
+			if (po.getCodice_prodotto().equals(codice))
+				break;
+			index++;
+		}
+		if (index<elenco_prodotti.size()) {
+			elenco_prodotti.remove(index);
+			return true;
+		}
+		return false;
 	}
 
 	public ArrayList<ProdottoOrdinato> getElenco_prodotti() {
 		return elenco_prodotti;
 	}
 
+	public void clearElencoProdotti(){
+		this.elenco_prodotti.clear();
+	}
 	public Date getData_emissione() {
 		return data_emissione;
 	}

@@ -13,8 +13,6 @@ public class Client {
     private String hostName ;
     private int portNumber ;
     private Socket socket ;
-    private PrintWriter out ;
-    private BufferedReader in ;
     private ObjectInputStream obj_in ;
     private ObjectOutputStream obj_out ;
 
@@ -25,9 +23,6 @@ public class Client {
         this.portNumber = portNumber ;
 
             socket = new Socket(hostName, portNumber);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
             obj_in = new ObjectInputStream(socket.getInputStream()) ;
             obj_out = new ObjectOutputStream(socket.getOutputStream()) ;
 

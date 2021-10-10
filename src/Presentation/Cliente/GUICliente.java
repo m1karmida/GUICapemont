@@ -129,7 +129,7 @@ public class GUICliente extends JFrame {
 		try {
 			Client client = new Client("93.88.110.173", 5000);
 			ArrayList<Prodotto> listaProdotti  = client.getListaProdotti();
-			if (listaProdotti==null)
+			if (listaProdotti==null ||listaProdotti.isEmpty())
 				JOptionPane.showMessageDialog(rootPane, "Nessun prodotto disponibile!","ERRORE PRODOTTO",JOptionPane.ERROR_MESSAGE);
 			else {	
 				String columns[] = {"Codice","Nome", "Disponibilita", "Prezzo", "Fornitore", "Azienda"};
@@ -149,6 +149,7 @@ public class GUICliente extends JFrame {
 				}
 				
 				JTable table = new JTable(data, columns);
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 				JScrollPane tablePane = new JScrollPane(table);
 				tablePane.setSize(table.getWidth(),table.getHeight());
 				JOptionPane.showMessageDialog(rootPane, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
@@ -173,13 +174,12 @@ public class GUICliente extends JFrame {
 			ArrayList<Azienda> aziende = client.getAziende();
 			client.closeConnection();
 			
-			if (aziende == null)
+			if (aziende == null || aziende.isEmpty())
 
 					JOptionPane.showMessageDialog(rootPane, "Errore: Non ci sono aziende disponibili!",
 															"ERRORE FORNITORI",JOptionPane.ERROR_MESSAGE);
 			
 			else {
-				/********* seleziona il fornitore per la categoria *******/
 				
 					String nomiAziende[] = new String[aziende.size()];
 					String emailAziende[] = new String[aziende.size()];				
@@ -206,7 +206,7 @@ public class GUICliente extends JFrame {
 					client = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti  = client.getListaProdottidiAzienda(azienda);
 					
-					if (listaProdotti==null)
+					if (listaProdotti==null || listaProdotti.isEmpty())
 						JOptionPane.showMessageDialog(rootPane, "Nessun prodotto disponibile!","ERRORE PRODOTTO",JOptionPane.ERROR_MESSAGE);
 					else {	
 						String columns[] = {"Codice","Nome", "Disponibilita", "Prezzo", "Fornitore"};
@@ -225,6 +225,7 @@ public class GUICliente extends JFrame {
 						}
 						
 						JTable table = new JTable(data, columns);
+						table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 						JScrollPane tablePane = new JScrollPane(table);
 						tablePane.setSize(table.getWidth(),table.getHeight());
 						JOptionPane.showMessageDialog(rootPane, tablePane, "Prodotti disponibili dell'Azienda " + azienda.getNome(),JOptionPane.INFORMATION_MESSAGE);

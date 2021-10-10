@@ -157,8 +157,7 @@ public class Init extends JFrame {
 				
 			        if (confirm == 0) {
 			           System.exit(0);
-			        } else
-			        	setVisible(true);
+			        }
 				
 			}
 

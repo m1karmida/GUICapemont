@@ -33,6 +33,7 @@ public class GUIOrdine extends JFrame {
 	private JPanel contentPane;
 	private Persona persona;
 	private JTable tbProdotto;
+	private JButton btnRimuovi;
 	private JButton btnAggiungi;
 	private JTextArea txtCarrello;
 	private JButton btnOrdina;
@@ -43,11 +44,12 @@ public class GUIOrdine extends JFrame {
 	private JScrollPane tablePane;
 	private JLabel lblProdotti;
 	private JLabel lblCarrello;
+	private GroupLayout gl_contentPane;
 	
 	public GUIOrdine(Persona persona, JFrame init) {
 		
 		this.persona = persona;
-		Agente agente = chooseAgente();
+		Agente agente = chooseAgente(init);
 		if (agente!= null) {
 				ordine =  new Ordine(codice + "", Date.valueOf(LocalDate.now()), agente, this.persona);
 				codice++;
@@ -68,6 +70,10 @@ public class GUIOrdine extends JFrame {
 				
 				txtCarrello = new JTextArea();
 				
+				
+				btnRimuovi = new JButton("Svuota Carrello");
+				clickRimuovi();
+				
 				btnOrdina = new JButton("Effettua ordine");
 				clickEffettua();
 				
@@ -78,38 +84,44 @@ public class GUIOrdine extends JFrame {
 				lblCarrello.setFont(new Font("Tahoma", Font.PLAIN, 17));
 				
 				setComponents();
+				
 				setLocationRelativeTo(init);
 				setVisible(true);
 	
 		}
+		
 		}
 
 	
 	private void setComponents() {
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+
+		gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(tablePane, GroupLayout.PREFERRED_SIZE, 559, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtCarrello, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(btnOrdina, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
-							.addGap(25)))
-					.addContainerGap())
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(203)
 					.addComponent(lblProdotti)
 					.addPreferredGap(ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
 					.addComponent(lblCarrello, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
 					.addGap(27))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addGap(197)
-					.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(410, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(tablePane, GroupLayout.PREFERRED_SIZE, 559, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnOrdina, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)
+							.addGap(77)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addComponent(txtCarrello, GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRimuovi)
+							.addGap(36))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -118,22 +130,25 @@ public class GUIOrdine extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCarrello, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblProdotti))
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(tablePane, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtCarrello, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-							.addGap(17)
-							.addComponent(btnOrdina, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(40, Short.MAX_VALUE))
+							.addComponent(tablePane, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE)
+							.addGap(13)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnAggiungi, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnOrdina, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(txtCarrello, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
+							.addGap(29)
+							.addComponent(btnRimuovi, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
 	
 	
-	private Agente chooseAgente() {
+	private Agente chooseAgente(JFrame init) {
 		
 		Client client;
 		try {
@@ -141,8 +156,8 @@ public class GUIOrdine extends JFrame {
 			ArrayList<Agente> agenti = client.getAgenti();
 			client.closeConnection();
 			
-			if (agenti == null)
-				JOptionPane.showMessageDialog(rootPane, "Non ci sono agenti a disposizione per l'ordine!","ERRORE AGENTI",JOptionPane.ERROR_MESSAGE);	
+			if (agenti == null || agenti.isEmpty())
+				JOptionPane.showMessageDialog(init, "Non ci sono agenti a disposizione per l'ordine!","ERRORE AGENTI",JOptionPane.ERROR_MESSAGE);
 			
 			else {
 				String nomiCogAgenti[] = new String[agenti.size()];
@@ -155,7 +170,7 @@ public class GUIOrdine extends JFrame {
 				}
 				
 				JComboBox comboBox = new JComboBox(nomiCogAgenti);
-				JOptionPane.showMessageDialog(rootPane, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
+				JOptionPane.showMessageDialog(init, comboBox, "Selezione Agente di vendita",JOptionPane.QUESTION_MESSAGE);
 				
 				int index = comboBox.getSelectedIndex();
 				
@@ -186,49 +201,94 @@ public class GUIOrdine extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index =  tbProdotto.getSelectedRow();
-				int quantita = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Hai selezionato " + data[index][1] + ". Inserisci la quantita da ordinare :" ));
-				if (Integer.parseInt(data[index][2]) >= quantita) {
-					txtCarrello.append(data[index][1] + "\t" + quantita + "\n");
-					int quantitaRimasta = Integer.parseInt(data[index][2]) - quantita;
-					data[index][2] = quantitaRimasta + "";
-					tbProdotto.setValueAt(quantitaRimasta + "", index, 2);
-					Prodotto prodotto = null;
-					for (Prodotto p : listaProdotti)
-						if (p.getCodice_prodotto().equals(data[index][0])) {
-							prodotto = p;
-							break;
-						}
-
-					ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantita));
-				} else
-					JOptionPane.showMessageDialog(null, "Errore: quantitï¿½ maggiore della disponibilitï¿½!");
+				if (index < 0) 
+					JOptionPane.showInputDialog(rootPane, "Non hai selezionato alcun prodotto!" );
+				else {
+						int quantita = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Hai selezionato " + data[index][1] + ". Inserisci la quantita da ordinare :" ));
+						
+						if (Integer.parseInt(data[index][2]) >= quantita) {
+							
+							txtCarrello.append(data[index][1] + "\t" + quantita + "\n");
+							int quantitaRimasta = Integer.parseInt(data[index][2]) - quantita;
+							data[index][2] = quantitaRimasta + "";
+							tbProdotto.setValueAt(quantitaRimasta + "", index, 2);
+							Prodotto prodotto = null;
+							for (Prodotto p : listaProdotti)
+								if (p.getCodice_prodotto().equals(data[index][0])) {
+									prodotto = p;
+									break;
+								}
+		
+							ordine.addElenco_prodotti(new ProdottoOrdinato(prodotto, quantita));
+						} else
+							JOptionPane.showMessageDialog(rootPane, "Errore: quantita maggiore della disponibilita!");
+					}
 			}
 		});
 	}
 	
 	
+	private void clickRimuovi() {
+		btnRimuovi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtCarrello.getText().equals(""))
+					JOptionPane.showMessageDialog(rootPane, "Il tuo carrello è già vuoto!", "ERRORE CARRELLO", JOptionPane.ERROR_MESSAGE);
+				else {
+					int confirm = JOptionPane.showOptionDialog(rootPane, "Sei sicuro di voler rimuovere gli elementi dal carrello?",
+							"Svuota carrello", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+					if (confirm == 0) {
+						for (ProdottoOrdinato po : ordine.getElenco_prodotti()) {
+
+							int i;
+							for (i = 0; i < tbProdotto.getRowCount(); i++) {
+								if (data[i][0].equals(po.getCodice_prodotto())) {
+									System.out.println("trovato " + i + "");
+									break;
+								}
+							}
+							data[i][2] = (Integer.parseInt(data[i][2]) + po.getQuantita_ordinata()) + "";
+							tbProdotto.setValueAt(data[i][2], i, 2);
+						}
+						ordine.clearElencoProdotti();
+						txtCarrello.setText("");
+					}
+				}
+			}
+		});
+		
+	}
 	
 	private void clickEffettua() {
 
 			
 			btnOrdina.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				try {
-					Client client = new Client("93.88.110.173", 5000);
-					System.out.println(ordine);
-					if (client.makeOrder(ordine))
-						JOptionPane.showMessageDialog(null, "Il suo ordine è andato a buon fine!","ESITO ORDINE",JOptionPane.INFORMATION_MESSAGE);
-					else
-						JOptionPane.showMessageDialog(null, "Errore: ordine non andato a buon fine. Riprovare!","ERRORE ORDINE",JOptionPane.ERROR_MESSAGE);
+					float somma = 0;
+					for (ProdottoOrdinato po : ordine.getElenco_prodotti())
+						somma += po.getPrezzo() * po.getQuantita_ordinata();
 					
-					client.closeConnection();
-					txtCarrello.setText("");
-					populateTable(column.length);
+					int confirm = JOptionPane.showOptionDialog(rootPane, "Il totale dell'ordine è di : " + somma + " €. Vuoi confermare l'ordine?", 
+																"Conferma Ordine", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+					if (confirm == 0) {
+									try {
+										Client client = new Client("93.88.110.173", 5000);
+										if (client.makeOrder(ordine))
+											JOptionPane.showMessageDialog(rootPane, "Il suo ordine è andato a buon fine!","ESITO ORDINE",JOptionPane.INFORMATION_MESSAGE);
+										else
+											JOptionPane.showMessageDialog(rootPane, "Errore: ordine non andato a buon fine. Riprovare!","ERRORE ORDINE",JOptionPane.ERROR_MESSAGE);
+										
+										client.closeConnection();
+										txtCarrello.setText("");
+										populateTable(column.length);
+										
+									} catch (IOException ex) {
+										JOptionPane.showMessageDialog(rootPane, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
+										ex.printStackTrace();
+									}
+
+					}
 					
-				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
-					ex.printStackTrace();
-				}
+				
 				}
 			});
 			
@@ -262,7 +322,7 @@ public class GUIOrdine extends JFrame {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(rootPane, "Connessione con il server non riuscita: riprovare","ERRORE CONNESSIONE",JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

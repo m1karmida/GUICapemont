@@ -116,7 +116,7 @@ public class GUIAzienda extends JFrame {
 					Client c = new Client("93.88.110.173", 5000);
 					ArrayList<Prodotto> listaProdotti = c.getListaProdottidiAzienda(azienda);
 					
-					if (listaProdotti == null)
+					if (listaProdotti == null || listaProdotti.isEmpty())
 						
 						JOptionPane.showMessageDialog(rootPane, "Non ci sono prodotti disponibili per l'azienda selezionata!","ERRORE AZIENDA",JOptionPane.WARNING_MESSAGE);
 					
@@ -136,6 +136,7 @@ public class GUIAzienda extends JFrame {
 							}
 							
 							JTable table = new JTable(data, column);
+							table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 							JScrollPane tablePane = new JScrollPane(table);
 							tablePane.setSize(table.getWidth(),table.getHeight());
 							JOptionPane.showMessageDialog(rootPane, tablePane, "Prodotti disponibili",JOptionPane.INFORMATION_MESSAGE);
