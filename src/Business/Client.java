@@ -55,7 +55,9 @@ public class Client {
         try {
 
             obj_out.writeObject(m);
-            return (Boolean)obj_in.readObject();
+            boolean ret = (Boolean)obj_in.readObject();
+            System.out.println(ret ? "REGISTRAZIONE RIUSCITA" : "REGISTRAZIONE NON RIUSCITA") ;
+            return ret;
 
         } catch( Exception e ) {
             e.printStackTrace();
@@ -74,6 +76,8 @@ public class Client {
         try {
             obj_out.writeObject(m);
             az = (Azienda) obj_in.readObject();
+            System.out.println(az != null ? "LOGIN RIUSCITO" : "LOGIN NON RIUSCITO") ;
+
         } catch ( Exception e ) {
             e.printStackTrace();
         }
@@ -88,8 +92,9 @@ public class Client {
         try {
 
             obj_out.writeObject(m);
-            return (Boolean)obj_in.readObject();
-
+            Boolean ret = (Boolean)obj_in.readObject();
+            System.out.println(ret ? "INSERIMENTO RIUSCITO" : "INSERIMENTO NON RIUSCITO") ;
+            return ret;
         } catch( Exception e ) {
 
             e.printStackTrace();
@@ -110,10 +115,7 @@ public class Client {
         try {
             obj_out.writeObject(m);
             prod = (ArrayList<Prodotto>) obj_in.readObject() ;
-
-            for ( Prodotto p : prod ) {
-                System.out.println(p.toString()) ;
-            }
+            System.out.println(prod != null ? "LISTA CORRETTAMENTE RICEVUTA" : "LISTA NON RICEVUTA CORRETTAMENTE") ;
         } catch ( Exception e ) {
             e.printStackTrace();
         }
@@ -130,9 +132,8 @@ public class Client {
          try {
              obj_out.writeObject(m);
              fornitori = (ArrayList<Fornitore>) obj_in.readObject() ;
-             for ( Fornitore f : fornitori ) {
-                 System.out.println(f.toString()) ;
-             }
+             System.out.println(fornitori != null ? "LISTA CORRETTAMENTE RICEVUTA" : "LISTA NON RICEVUTA CORRETTAMENTE") ;
+
          } catch ( Exception e ) {
              e.printStackTrace();
          }
@@ -155,8 +156,11 @@ public class Client {
         try {
 
             obj_out.writeObject(m);
-            return (Boolean) obj_in.readObject();
+            Boolean ret =  (Boolean) obj_in.readObject();
 
+            System.out.println(ret ? "REGISTRAZIONE UTENTE EFFETTUATA" : "REGISTRAZIONE UTENTE NON EFFETTUATA") ;
+
+            return ret;
         } catch( Exception e ) {
             e.printStackTrace();
         }
@@ -173,7 +177,7 @@ public class Client {
         try {
             obj_out.writeObject(m) ;
             p = (Persona) obj_in.readObject();
-            System.out.println(p.toString()) ;
+            System.out.println(p!=null ? "LOGIN " + p.getNome() + " " + p.getCognome() + " RIUSCITO" : "LOGIN NON RIUSCITO") ;
 
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -188,7 +192,9 @@ public class Client {
          try {
 
              obj_out.writeObject(m);
-             return (Boolean) obj_in.readObject();
+             Boolean ret =  (Boolean) obj_in.readObject();
+             System.out.println(ret ? "ORDINE CORRETTAMENTE EFFETTUATO" : "ORDINE NON ANDATO A BUON FINE") ;
+             return ret;
 
          } catch (Exception e) {
              e.printStackTrace();
@@ -211,9 +217,8 @@ public class Client {
         try {
             obj_out.writeObject(m);
             prod = (ArrayList<Prodotto>) obj_in.readObject() ;
-            for ( Prodotto p : prod ) {
-                System.out.println(p.toString()) ;
-            }
+            System.out.println(prod != null ? "LISTA CORRETTAMENTE RICEVUTA" : "LISTA NON RICEVUTA CORRETTAMENTE") ;
+
         } catch ( Exception e ) {
             e.printStackTrace();
         }
@@ -232,9 +237,7 @@ public class Client {
         try {
             obj_out.writeObject(m);
             agenti = (ArrayList<Agente>) obj_in.readObject() ;
-            for ( Agente a : agenti ) {
-                System.out.println(a.toString()) ;
-            }
+            System.out.println(agenti != null ? "LISTA CORRETTAMENTE RICEVUTA" : "LISTA NON RICEVUTA CORRETTAMENTE") ;
         } catch ( Exception e ) {
             e.printStackTrace();
         }
@@ -251,6 +254,7 @@ public class Client {
            try {
                obj_out.writeObject(m);
                aziende = (ArrayList<Azienda>) obj_in.readObject() ;
+               System.out.println(aziende != null ? "LISTA CORRETTAMENTE RICEVUTA" : "LISTA NON RICEVUTA CORRETTAMENTE") ;
                
            } catch ( Exception e ) {
                e.printStackTrace();

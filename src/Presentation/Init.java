@@ -151,7 +151,7 @@ public class Init extends JFrame {
 			public void windowClosing(WindowEvent arg0) {
 				
 				int confirm = JOptionPane.showOptionDialog(
-			             null, "Sei sicuro di chiudere l'applicazione?", 
+			             rootPane, "Sei sicuro di chiudere l'applicazione?", 
 			             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
 			             JOptionPane.QUESTION_MESSAGE, null, null, null);
 				

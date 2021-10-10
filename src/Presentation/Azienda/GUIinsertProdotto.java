@@ -161,7 +161,7 @@ public class GUIinsertProdotto extends JFrame {
 							ArrayList<Fornitore> fornitori = client.getFornitori((CategoriaProdotto) cmbCategoria.getSelectedItem());
 							client.closeConnection();
 							
-							if (fornitori == null)
+							if (fornitori == null || fornitori.isEmpty())
 		
 									JOptionPane.showMessageDialog(rootPane, "Errore: Non ci sono fornitori disponibili per la categoria selezionata, si prega di inserirne almeno uno o di cambiare categoria",
 																			"ERRORE FORNITORI",JOptionPane.ERROR_MESSAGE);

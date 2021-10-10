@@ -36,7 +36,7 @@ public class LoginCliente extends JFrame {
 		this.init = init;
 		setTitle("Login Cliente");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 360, 222);
+		setBounds(100, 100, 385, 222);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

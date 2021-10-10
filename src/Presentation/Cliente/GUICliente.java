@@ -102,13 +102,13 @@ public class GUICliente extends JFrame {
 						JOptionPane.INFORMATION_MESSAGE,null,options,null);
 				
 				switch(confirm) {
-				case 1:{
+				case 0:{
 					
 					allProduct();
 					break;
 					
 				}
-				case 2: {
+				case 1: {
 					
 					productAziende();
 					break;

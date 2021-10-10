@@ -10,12 +10,7 @@ public class RegisterUtenteCommandExecutor implements CommandExecutor{
     public Object execute(Messaggio messaggio) {
 
         Persona p = (Persona) messaggio.getObject() ;
-        System.out.println("RICHIESTA REGISTRAZIONE PERSONA "+p.toString());
-        Boolean registrato=false;
-
-        if (CapemontDAO.getInstance().makeRegister(p))
-            registrato = true;
-
-        return registrato;
+        System.out.println("RICHIESTA REGISTRAZIONE PERSONA "+p.getNome() + " " + p.getCognome());
+        return (Boolean) CapemontDAO.getInstance().makeRegister(p);
     }
 }

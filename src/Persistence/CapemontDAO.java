@@ -15,7 +15,7 @@ public class CapemontDAO implements CapemontDAOInterface {
 
 
     private CapemontDAO (){
-        url = "jdbc:postgresql://localhost/capemont_db" ; //Parametri da se
+        url = "jdbc:postgresql://localhost/capemont_db" ;
         user = "postgres" ;
         pwd = "6454" ;
     }
@@ -415,24 +415,4 @@ public class CapemontDAO implements CapemontDAOInterface {
         }
         return true ;
     }
-
-   /* public static void main( String [] args ) {
-
-        String url = "jdbc:postgresql://localhost/capemont_db" ;
-        String user = "postgres" ;
-        String pwd = "password" ;
-        String query = "SELECT * FROM CAPOCCHIA" ;
-
-        try {
-            Connection conn = DriverManager.getConnection(url,user,pwd) ;
-            Statement stm = conn.createStatement() ;
-            ResultSet rst = stm.executeQuery(query) ;
-            while( rst.next() ) {
-                System.out.println(rst.getString("pene")) ;
-            }
-            conn.close() ;
-        } catch ( SQLException ex ) {
-            System.out.println(ex.getMessage()) ;
-        }
-    }*/
 }
