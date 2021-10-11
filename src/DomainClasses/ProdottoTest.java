@@ -14,9 +14,10 @@ public class ProdottoTest {
 	Date data;
 	Azienda a;
 	Fornitore fornitore;
+	CategoriaProdotto categoria;
 	@Before
 	public void setUp() throws Exception {
-		p= new Prodotto("nome","categoria",5,5,data,a,fornitore);
+		p= new Prodotto("nome",categoria,5,5,a,fornitore);
 		assertNotNull(p);
 	}
 

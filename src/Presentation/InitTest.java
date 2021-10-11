@@ -1,3 +1,4 @@
+package Presentation;
 import static org.junit.Assert.*;
 
 
@@ -11,6 +12,7 @@ import java.lang.reflect.Field;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Component;
+
 
 
 public class InitTest {

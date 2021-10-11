@@ -11,12 +11,11 @@ import org.junit.Test;
 public class AgenteTest {
 
 	Agente a;
-	ArrayList<Ordine> ordini_gestiti;
 	@Before
 	public void setUp() throws Exception {
 		
 		a= new Agente("piva_prova","agente_prova", "cognome", "via prova 1", "3333333333", "agente",
-				  "codice", ordini_gestiti);
+				  "codice");
 		assertNotNull(a);
 	}
 
