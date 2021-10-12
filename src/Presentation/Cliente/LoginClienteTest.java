@@ -18,7 +18,6 @@ public class LoginClienteTest {
 	
 	LoginCliente lo;
 	Persona persona;
-	
 	@Before
 	public void setUp() throws Exception {
 		try
